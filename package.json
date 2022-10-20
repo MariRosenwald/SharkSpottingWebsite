@@ -1,0 +1,41 @@
+{
+  "name": "shark-spotting-site",
+  "version": "1.0.0",
+  "description": "Starter project for Typescript NodeJS.",
+  "scripts": {
+    "start": "node dist/server.js",
+    "dev": "nodemon --watch src --exec ts-node src/server.ts",
+    "build": "tsc",
+    "lint": "tslint -c tslint.json -p tsconfig.json",
+    "dev:client": "npm run dev --prefix=src-client",
+    "dev-all": "concurrently \"npm run dev\" \"npm run dev --prefix src-client\"",
+    "build-all": "npm run build && npm run build --prefix src-client",
+    "lint-all": "tslint -c tslint.json -p tsconfig.json && npm run lint --prefix src-client"
+  },
+  "author": "deskoh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "typescript": "^3.2.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.0",
+    "@types/express-session": "^1.15.11",
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.18.9",
+    "ts-node": "^7.0.1",
+    "tsconfig-paths": "^3.7.0",
+    "tslint": "^5.12.1",
+    "tslint-react": "^3.6.0"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MariRosenwald/SharkSpottingWebsite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/MariRosenwald/SharkSpottingWebsite/issues"
+  },
+  "homepage": "https://github.com/MariRosenwald/SharkSpottingWebsite#readme"
+}

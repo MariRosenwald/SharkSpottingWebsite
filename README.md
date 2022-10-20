@@ -30,6 +30,7 @@
 | **src-client**           | Source code for client (React)         |
 | **public**               | Contains static html pages                                              |
 | **src**/server.ts        | Entry point to server application                                                            |
+| **src-client**/index.tsx | Entry point to client                                   |
 | **.vscode**              | Contains VS Code specific settings                                                         |
 | **dist**                 | Contains the output from TypeScript build for server (Node).                               |
 | **public/dist**          | Contains the output from TypeScript build for client                             |

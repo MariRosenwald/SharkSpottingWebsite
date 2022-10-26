@@ -1,6 +1,6 @@
-import * as React from 'react';
+import * as React from "react";
 //import axios from 'axios';
-import { Header } from './common';
+import { Header } from "./common";
 
 export function Page() {
   return (
@@ -10,4 +10,4 @@ export function Page() {
   );
 }
 
-// <a href="http://localhost:3000/message">Backend API endpoint.</a>
+//<a href="http://localhost:3000/message">Backend API endpoint.</a>

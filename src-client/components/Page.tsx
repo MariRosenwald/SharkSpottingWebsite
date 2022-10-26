@@ -3,11 +3,9 @@ import * as React from 'react';
 import { Header } from './common';
 
 export function Page() {
-
   return (
     <div>
       <Header />
-     
     </div>
   );
 }

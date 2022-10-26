@@ -7,7 +7,9 @@ export function Page() {
   return (
     <div>
       <Header />
-      <a href="http://localhost:3000/message">Backend API endpoint.</a>
+     
     </div>
   );
 }
+
+// <a href="http://localhost:3000/message">Backend API endpoint.</a>

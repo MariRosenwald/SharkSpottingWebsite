@@ -1,11 +1,15 @@
 import * as React from "react";
 //import axios from 'axios';
 import { Header } from "./common";
+import { AboutPage } from "./AboutPage";
 
 export function Page() {
   return (
     <div>
       <Header />
+      <div>
+        <AboutPage />
+      </div>
     </div>
   );
 }

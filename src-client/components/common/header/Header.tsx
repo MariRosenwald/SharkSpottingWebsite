@@ -4,8 +4,10 @@ import "./Header.css";
 import CSS from "csstype";
 
 const image: CSS.Properties = {
-  width: "100%",
+  width: "110%",
   height: "300px",
+  marginLeft: "-5%",
+  marginRight: "-5%",
 };
 
 const centered: CSS.Properties = {
@@ -21,13 +23,34 @@ const container: CSS.Properties = {
   textAlign: "center",
 };
 
+const topHeader: CSS.Properties = {
+  backgroundColor: "#005D71",
+  color: "white",
+  marginLeft: "-10%",
+  marginRight: "-10%",
+  marginTop: "-1rem",
+  paddingLeft: "10%",
+  paddingTop: "1rem",
+  top: "-1rem",
+  paddingBottom: "1rem",
+  display: "flex",
+  verticalAlign: "middle",
+};
+
+const logo: CSS.Properties = {
+  color: "white",
+  fontFamily: "trattatello",
+  verticalAlign: "middle",
+  fontSize: "200%",
+};
+
 function Header() {
   return (
     <section className="header">
-      <section className="topHeader">
-        <section className="topHaderLogo">
-          <a href="/" className="header-logo">
-            LOGO
+      <section style={topHeader} className="topHeader">
+        <section className="topHeaderLogo">
+          <a style={logo} href="/" className="header-logo">
+            SharkSpotting
           </a>
         </section>
         <section className="topHeaderNavbar">
@@ -35,9 +58,9 @@ function Header() {
         </section>
       </section>
       <section className="bottomHeader">
-        <section className="bottomHeaderFullName">
+        {/* <section className="bottomHeaderFullName">
           Drones For Marine Science and Agriculture
-        </section>
+        </section> */}
         <div style={container}>
           <img src="/resources/ocean.jpg" style={image} />
           <h1 style={centered}>Drones for Marine Science and Agriculture</h1>

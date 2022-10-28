@@ -6,14 +6,15 @@ const flex: CSS.Properties = {
   display: "flex",
   marginTop: "2rem",
   position: "absolute",
-  left: "40%",
+  left: "45%",
   transform: "translate(-50%, -50%)",
   color: "white",
   padding: "2rem",
 };
 const headerLinks: CSS.Properties = {
   color: "white",
-  margin: "10%",
+  paddingLeft: "10%",
+  paddingRight: "10%",
 };
 function Navbar() {
   return (

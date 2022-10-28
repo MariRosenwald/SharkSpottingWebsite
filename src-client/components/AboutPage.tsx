@@ -14,6 +14,38 @@ const about: CSS.Properties = {
   marginLeft: "33%",
   marginRight: "33%",
 };
+const img: CSS.Properties = {
+  position: "relative",
+  marginLeft: "auto",
+  marginRight: "auto",
+  display: "block",
+  width: "50%",
+  height: "25%",
+};
+
+const text: CSS.Properties = {
+  paddingTop: "2.5%",
+  textAlign: "center",
+  paddingLeft: "15%",
+  paddingRight: "15%",
+  fontWeight: "bolder",
+};
 export function AboutPage() {
-  return <h1 style={about}>About Us</h1>;
+  return (
+    <div>
+      <h1 style={about}>About Us</h1>
+      <img
+        style={img}
+        src="resources/sharkZoom.png"
+        alt="resources/ocean.jpg"
+      />
+      <p style={text}>
+        Shark Spotting with Drones is a research project sponsored by the
+        California Polytechnic State University, San Luis Obispo College of
+        Engineering. Our project focuses on implementing a trained neural
+        network to recognize and learn about sharks and other marine life in an
+        effort to make the ocean safer for everyone.
+      </p>
+    </div>
+  );
 }

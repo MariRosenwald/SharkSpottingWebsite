@@ -22,13 +22,13 @@ export function Navbar() {
         <a style={headerLinks} href="/" className="About">
           about
         </a>
-        <a style={headerLinks} href="/" className="Teams">
+        <a style={headerLinks} href="/teams" className="Teams">
           teams
         </a>
-        <a style={headerLinks} href="/" className="Members">
+        <a style={headerLinks} href="/members" className="Members">
           members
         </a>
-        <a style={headerLinks} href="/" className="News">
+        <a style={headerLinks} href="/news" className="News">
           news
         </a>
       </section>

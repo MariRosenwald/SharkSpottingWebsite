@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Header } from './common/header/Header';
 
 const about = {
   font: 'Arial Black',
@@ -31,6 +32,7 @@ const text = {
 export function AboutPage() {
   return (
     <div>
+      <Header />
       <h1 style={about}>About Us</h1>
       <img style={img} src="resources/sharkZoom.png" alt="resources/ocean.jpg" />
       <p style={text}>

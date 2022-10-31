@@ -25,7 +25,7 @@
 - Run linter
 
 ```bash
-npm run lint-all
+npm run es-lint
 ```
 
 - Run prettier text formatter
@@ -61,7 +61,7 @@ npx prettier -write "file_name"
 | `dev:client` | Runs frontend server in watch mode at localhost:8080.                                   |
 | `dev-all`    | Runs project (backend at localhost:3000 and frontend at localhost:8080]) in watch mode. |
 | `build-all`  | Full build. Runs ALL build tasks for backend and frontend                               |
-| `lint-all`   | Lint frontend and backend TS files                                                      |
+| `es-lint`    | Lint frontend and backend TS files                                                      |
 
 ## **VS Code Debugging**
 

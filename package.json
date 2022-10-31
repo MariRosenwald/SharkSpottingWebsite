@@ -1,0 +1,5 @@
+{
+    "scripts": {
+        "start":"concurrently \"npm start --prefix react-frontend\" \"npm run dev --prefix expressjs-backend\""
+    }
+}

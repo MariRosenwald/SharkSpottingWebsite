@@ -1,10 +1,3 @@
-# SharkSpottingSiteJS
-1. npm install in frontend and backend
-2. in backend:
-    - npm install express
-    - npm install --save-dev nodemon
-
-
 # **How to Run**
 
 - Install dependencies for server (backend)
@@ -62,7 +55,7 @@ npm run format
 | ---/.eslintrc.json       | Config settings for ESLint code style checking                  |
 | ---/.prettierrc          | Config settings for Prettier formatter                          |
 | ---**/public**           | Contains static html pages                                      |
-| ------**/resources**     | Images/static data foo                                          |
+| ------**/resources**     | Images/static page data                                         |
 
 ## **NPM Scripts**
 

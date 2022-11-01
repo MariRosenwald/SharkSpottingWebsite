@@ -1,0 +1,29 @@
+.heading {
+  font: Arial Black;
+  font-size: 350%;
+  text-align: center;
+  color: #005d71;
+  padding-bottom: 20px;
+  border-bottom: 0.25rem solid #c8a326;
+  border-bottom-color: #c8a326;
+  box-shadow: 0 4px 4px -4px black;
+  margin-left: 33%;
+  margin-right: 33%;
+}
+
+.centered {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 50%;
+  height: 25%;
+}
+
+.paragraph-text {
+  padding-top: 2.5%;
+  text-align: center;
+  padding-left: 15%;
+  padding-right: 15%;
+  font-weight: bolder;
+}

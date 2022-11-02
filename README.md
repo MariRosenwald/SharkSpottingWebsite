@@ -1,3 +1,6 @@
+![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/node.js.yml/badge.svg)
+
+
 # **How to Run**
 
 - Install dependencies for server (backend)

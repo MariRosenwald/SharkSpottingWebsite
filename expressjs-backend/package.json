@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon backend.js",
     "lint": "eslint .",
-    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
+    "build": "npm run start"
   },
   "author": "",
   "license": "ISC",

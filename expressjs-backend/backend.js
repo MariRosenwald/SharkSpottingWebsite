@@ -35,15 +35,15 @@ app.get('/auth', (req, res) => {
     }
     
     else {
-        authenticated = false
-        filteredUsers = users['users_list'].filter((user) =>
+        let authenticated = false
+        const filteredUsers = users['users_list'].filter((user) =>
             user['email'] === email
         );
         if (filteredUsers.length < 1) {
             res.status(404).send(`No user '${email}' found`).end();
         }
-        user = filteredUsers[0]
-        user_pwd = user['password']
+        const user = filteredUsers[0]
+        const user_pwd = user['password']
         if (user_pwd == pwd) {
             authenticated = true
         }
@@ -78,7 +78,7 @@ app.delete('/users', (req, res) => {
     } else {
         console.log(users.users_list);
         index = users.users_list.findIndex(user => user.id == id);
-        if (index == -1) {
+        if (index == -1) { 
             res.status(404).statusMessage(`ID "${id}" does not exist`).end();
         }
         console.log(index);
@@ -89,6 +89,7 @@ app.delete('/users', (req, res) => {
 });
 */
 
+// eslint-disable-next-line
 app.listen(process.env.PORT || port, () => {
     console.log("REST API is listening.");
 });

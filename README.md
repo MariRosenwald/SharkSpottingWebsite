@@ -1,4 +1,4 @@
-![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/node.js.yml/badge.svg)
+![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/react-frontend.js.yml/badge.svg)
 
 
 # **How to Run**

@@ -3,52 +3,65 @@ const express = require('express');
 const app = express();
 const port = 5050;
 
-const users = { 
-    users_list :
-    [
-       { 
-          email : 'pkmarsh@calpoly.edu',
-          password : 'dog'
-       },
-       {
-          email : 'mari@mari.com',
-          password : 'cat'
-       }
-    ]
- }
+const users = {
+  users_list: [
+    {
+      email: 'pkmarsh@calpoly.edu',
+      password: 'dog'
+    },
+    {
+      email: 'mari@mari.com',
+      password: 'cat'
+    }
+  ]
+};
+
+const data = {
+  data_list: [
+    {
+      title: 'shark pics',
+      location: 'https://google.com',
+      description: 'test'
+    },
+    {
+      title: 'boat pics',
+      location: 'https://www.yahoo.com/?guccounter=1',
+      description: 'backend validation'
+    }
+  ]
+};
 
 app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
+});
+
+app.get('/user', (req, res) => {
+  res.send(data);
 });
 
 app.get('/auth', (req, res) => {
-    const email = req.query.email
-    const pwd = req.query.pwd
-    if (email === undefined) {
-        res.status(500).send("No email specified").end();
+  const email = req.query.email;
+  const pwd = req.query.pwd;
+  if (email === undefined) {
+    res.status(500).send('No email specified').end();
+  } else if (pwd === undefined) {
+    res.status(500).send('No password specified').end();
+  } else {
+    authenticated = false;
+    filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+    if (filteredUsers.length < 1) {
+      res.status(404).send(`No user '${email}' found`).end();
     }
-    else if (pwd === undefined) {
-        res.status(500).send("No password specified").end();
+    user = filteredUsers[0];
+    user_pwd = user['password'];
+    if (user_pwd == pwd) {
+      authenticated = true;
     }
-    
-    else {
-        authenticated = false
-        filteredUsers = users['users_list'].filter((user) =>
-            user['email'] === email
-        );
-        if (filteredUsers.length < 1) {
-            res.status(404).send(`No user '${email}' found`).end();
-        }
-        user = filteredUsers[0]
-        user_pwd = user['password']
-        if (user_pwd == pwd) {
-            authenticated = true
-        }
-        res.send(authenticated);
-    }   
+    res.send(authenticated);
+  }
 });
 
 /*
@@ -90,5 +103,5 @@ app.delete('/users', (req, res) => {
 */
 
 app.listen(process.env.PORT || port, () => {
-    console.log("REST API is listening.");
+  console.log('REST API is listening.');
 });

@@ -7,29 +7,12 @@ const users = {
     users_list :
     [
        { 
-          id : 'xyz789',
-          name : 'Charlie',
-          job: 'Janitor',
+          email : 'pkmarsh@calpoly.edu',
+          password : 'dog'
        },
        {
-          id : 'abc123', 
-          name: 'Mac',
-          job: 'Bouncer',
-       },
-       {
-          id : 'ppp222', 
-          name: 'Mac',
-          job: 'Professor',
-       }, 
-       {
-          id: 'yat999', 
-          name: 'Dee',
-          job: 'Aspring actress',
-       },
-       {
-          id: 'zap555', 
-          name: 'Dennis',
-          job: 'Bartender',
+          email : 'mari@mari.com',
+          password : 'cat'
        }
     ]
  }
@@ -41,44 +24,34 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/users', (req, res) => {
-    const name = req.query.name;
-    const job = req.query.job;
-    filteredUsers = users['users_list'];
-    if (name != undefined){
-        filteredUsers = filteredUsers.filter((user) =>
-            user['name'] === name
-        );
-    } if (job != undefined) {
-        filteredUsers = filteredUsers.filter((user) =>
-            user['job'] === job
-        );
-    } 
-    result = {users_list: filteredUsers};
-    res.send(result);
-});
-
-app.get('/users/:id', (req, res) => {
-    const id = req.params['id']; //or req.params.id
-    let result = findUserById(id);
-    if (result === undefined || result.length == 0)
-        res.status(404).send('Resource not found.');
-    else {
-        result = {users_list: result};
-        res.send(result);
+app.get('/auth', (req, res) => {
+    const email = req.query.email
+    const pwd = req.query.pwd
+    if (email === undefined) {
+        res.status(500).send("No email specified").end();
     }
+    else if (pwd === undefined) {
+        res.status(500).send("No password specified").end();
+    }
+    
+    else {
+        authenticated = false
+        filteredUsers = users['users_list'].filter((user) =>
+            user['email'] === email
+        );
+        if (filteredUsers.length < 1) {
+            res.status(404).send(`No user '${email}' found`).end();
+        }
+        user = filteredUsers[0]
+        user_pwd = user['password']
+        if (user_pwd == pwd) {
+            authenticated = true
+        }
+        res.send(authenticated);
+    }   
 });
 
-function findUserById(id) {
-    return users['users_list'].find( (user) => user['id'] === id); // or line below
-}
-
-app.post('/users', (req, res) => {
-    const userToAdd = req.body;
-    userJson = addUser(userToAdd);
-    res.status(201).send(userJson).end();
-});
-
+/*
 function generateRandomUniqueID() {
     allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     id = "";
@@ -114,7 +87,7 @@ app.delete('/users', (req, res) => {
     }
     res.status(204).end();
 });
-
+*/
 app.listen(port, () => {
     console.log(`Example app listening at http://localhost:${port}`);
 });      

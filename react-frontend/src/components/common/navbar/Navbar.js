@@ -10,6 +10,7 @@ export function Navbar() {
       <a href="/teams">Teams</a>
       <a href="/members">Members</a>
       <a href="/news">News</a>
+      <a href="/login">Login</a>
     </div>
     // <section style={flex}>
     //   <section className="About-sec">

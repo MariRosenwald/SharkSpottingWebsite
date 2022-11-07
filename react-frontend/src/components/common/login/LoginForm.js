@@ -26,10 +26,13 @@ export class LoginForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-    alert("yo")
-    console.log(this.state.emailOrUsername)
-    console.log(this.state.password)
-    console.log(await axios.get('http://localhost:5050/auth', { params : {email: this.state.emailOrUsername, pwd: this.state.password}}));
+
+    try {
+      const response = await axios.get('http://localhost:5050/auth', { params : {email: this.state.emailOrUsername, pwd: this.state.password}});
+      alert(`Authenticated: ${response.data}`)
+    } catch {
+      alert('Email not found')
+    }
   }
 
 

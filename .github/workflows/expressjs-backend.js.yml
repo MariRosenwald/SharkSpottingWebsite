@@ -11,7 +11,7 @@ on:
 
 defaults:
   run:
-    working-directory: ./expressjs-backend
+    working-directory: expressjs-backend
 
 jobs:
   build:
@@ -26,10 +26,10 @@ jobs:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
-        working-directory: ./expressjs-backend
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+          cache-dependency-path: "expressjs-backend/package-lock.json"
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run lint

@@ -42,6 +42,10 @@ app.get('/user', (req, res) => {
   res.send(data);
 });
 
+app.get('/login', (req, res) => {
+  res.send(users);
+});
+
 app.get('/auth', (req, res) => {
   const email = req.query.email;
   const pwd = req.query.pwd;

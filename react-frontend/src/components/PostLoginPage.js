@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import DataTable from './PostLoginTable';
 import axios from 'axios';
 
-// const rows = [{ title: 'shark pics', location: 'https://google.com', description: 'test' }];
-
 export function PostLogin() {
   const [data, setData] = useState([]);
   useEffect(() => {

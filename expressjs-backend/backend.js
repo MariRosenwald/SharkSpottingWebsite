@@ -91,5 +91,10 @@ app.delete('/users', (req, res) => {
 
 // eslint-disable-next-line
 app.listen(process.env.PORT || port, () => {
-    console.log("REST API is listening.");
+    if (process.env.PORT) {
+        console.log(`REST API is listening on port ${process.env.PORT}`);
+    }
+    else {
+        console.log(`REST API is listening on port ${port}`);
+    }
 });

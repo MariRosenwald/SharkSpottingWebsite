@@ -1,4 +1,4 @@
-const page = require('./index.js');
+//const page = require('./index.js');
 
 //test('test home page', () => {
 

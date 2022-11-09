@@ -9,8 +9,12 @@ export function TeamsPage() {
     <div>
       <Header />
       <h1 className="heading">Teams</h1>
-      <PostLogin />
-      <AdminLogin />
+      <div>
+        <PostLogin />
+      </div>
+      <div style={{ marginTop: 5 + 'em' }}>
+        <AdminLogin />
+      </div>
     </div>
   );
 }

@@ -32,6 +32,7 @@
   margin-left: auto;
   margin-right: auto;
   border-collapse: collapse;
+  width: 75%;
 }
 
 th {
@@ -47,4 +48,20 @@ th {
 td {
   border: 1px solid #000;
   padding: 8px;
+}
+
+.centered-form {
+  text-align: center;
+}
+
+.div-form {
+  display: block;
+  text-align: center;
+  padding-top: 5em;
+}
+.form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
 }

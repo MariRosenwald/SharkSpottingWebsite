@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import DataTable from './PostLoginTable';
 import axios from 'axios';
-
+import Form from './RequestForm';
+import './Pages.css';
 export function PostLogin() {
   const [data, setData] = useState([]);
   useEffect(() => {
@@ -21,5 +22,10 @@ export function PostLogin() {
     }
   }
 
-  return <DataTable data={data} />;
+  return (
+    <div>
+      <DataTable data={data} />
+      <Form />
+    </div>
+  );
 }

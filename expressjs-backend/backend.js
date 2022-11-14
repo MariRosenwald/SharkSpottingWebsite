@@ -4,19 +4,19 @@ const app = express();
 const port = 5050;
 const userServices = require('./user-services');
 
-/*const users = { 
+const users = { 
     users_list :
     [
        { 
           email : 'pkmarsh@calpoly.edu',
-          password : 'dog'
+          pwd : 'dog'
        },
        {
           email : 'mari@mari.com',
-          password : 'cat'
-       }
+          pwd : 'cat'
+       } 
     ]
- }*/
+}
 
 app.use(cors());
 app.use(express.json());
@@ -25,13 +25,13 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/user', (req, res) => {
-    res.send(data);
-});
+// app.get('/user', (req, res) => {
+//     res.send(data);
+// });
   
-app.get('/login', (req, res) => {
-    res.send(users);
-});
+// app.get('/login', (req, res) => {
+//     res.send(users);
+// });
 
 app.get('/auth', async (req, res) => {
     const email = req.query.email;
@@ -43,13 +43,20 @@ app.get('/auth', async (req, res) => {
     }
     
     else {
-        authenticated = false
-        const filteredUsers = await userServices.getUsers(email);
+        let authenticated = false
+        let filteredUsers = await userServices.getUsers(email);
+        
+        if (filteredUsers === undefined) {
+            // Mongodb is not conected, load users from backend.js for testing purposes
+            console.log("mongodb is not connected, loading users from backend.js")
+            filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+        }
+
         if (filteredUsers.length < 1) {
             res.status(404).send(`No user '${email}' found`).end();
         }
-        user = filteredUsers[0]
-        user_pwd = user.pwd
+        let user = filteredUsers[0]
+        let user_pwd = user.pwd
         if (user_pwd == pwd) {
             authenticated = true
         }

@@ -27,12 +27,18 @@ export class LoginForm extends React.Component {
   async handleSubmit(event) {
     event.preventDefault();
 
-    try {
-      const response = await axios.get('http://localhost:5050/auth', { params : {email: this.state.emailOrUsername, pwd: this.state.password}});
-      alert(`Authenticated: ${response.data}`)
-    } catch {
-      alert('Email not found')
-    }
+    axios.get('http://localhost:5050/auth', { params : {email: this.state.emailOrUsername, pwd: this.state.password}})
+        .then((response) => {
+          alert(`Authenticated: ${response.data}`)
+        })
+        .catch((error) => {
+          if (error.response.data) {
+            alert(`Error: ${error.response.data}`)
+          } else {
+            // client never received a response
+            alert("Could not connect to server")
+          }
+        })
   }
 
 

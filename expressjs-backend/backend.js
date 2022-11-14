@@ -5,41 +5,59 @@ const port = 5050;
 const userServices = require('./user-services');
 const uuid = require('uuid');
 
+// Setup
+
+app.use(cors());
+app.use(express.json());
+
+app.listen(process.env.PORT || port, () => {
+    if (process.env.PORT) {
+        console.log(`REST API is listening on port ${process.env.PORT}`);
+    }
+    else {
+        console.log(`REST API is listening on port ${port}`);
+    }
+});
+
+// Data (for testing)
+
 const users = { 
     users_list :
     [
        { 
           email : 'pkmarsh@calpoly.edu',
-          pwd : 'dog'
+          pwd : 'dog',
+          admin : false
        },
        {
           email : 'mari@mari.com',
-          pwd : 'cat'
+          pwd : 'cat',
+          admin : true
        } 
     ]
 }
 
-const data = {
-  data_list: [
-    {
-      title: 'shark pics',
-      location: 'https://google.com',
-      description: 'test'
-    },
-    {
-      title: 'boat pics',
-      location: 'https://www.yahoo.com/?guccounter=1',
-      description: 'backend validation'
-    }
-  ]
-};
 
 const requests = {
   request_list: []
 };
 
-app.use(cors());
-app.use(express.json());
+const data = {
+    data_list: [
+      {
+        title: 'shark pics',
+        location: 'https://google.com',
+        description: 'test'
+      },
+      {
+        title: 'boat pics',
+        location: 'https://www.yahoo.com/?guccounter=1',
+        description: 'backend validation'
+      }
+    ]
+  };
+
+// API Endpoints
 
 app.get('/', (req, res) => {
   res.send('Hello World!');
@@ -66,26 +84,16 @@ app.get('/auth', async (req, res) => {
     } else if (pwd === undefined) {
         res.status(500).send('No password specified').end();
     }
-    
     else {
-        let authenticated = false
-        let filteredUsers = await userServices.getUsers(email);
-        
-        if (filteredUsers === undefined) {
-            // Mongodb is not conected, load users from backend.js for testing purposes
-            console.log("mongodb is not connected, loading users from backend.js")
-            filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+        let auth, user
+        try {
+            //eslint-disable-next-line
+            [ auth, user ] = await authenticate(email, pwd)
+            res.status(201).send(auth).end();
         }
-
-        if (filteredUsers.length < 1) {
+        catch {
             res.status(404).send(`No user '${email}' found`).end();
         }
-        let user = filteredUsers[0]
-        let user_pwd = user.pwd
-        if (user_pwd == pwd) {
-            authenticated = true
-        }
-        res.send(authenticated).end();
     }   
 });
 
@@ -103,6 +111,7 @@ function addRequest(request) {
   requests['request_list'].push(requestWithID);
   return requestWithID;
 }
+
 app.post('/auth', async (req, res) => {
     const user = req.body;
     const savedUser = await userServices.addUser(user);
@@ -111,6 +120,36 @@ app.post('/auth', async (req, res) => {
     else
         res.status(500).end();
 });
+
+// Helper functions
+
+async function authenticate(email, pwd) {
+    let authenticated = false
+
+    let filteredUsers = await userServices.getUsers(email);
+        
+    if (filteredUsers === undefined) {
+        // Mongodb is not conected, load users from backend.js for testing purposes
+        console.log("mongodb is not connected, loading users from backend.js")
+        filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+    }
+
+    if (filteredUsers.length < 1) {
+        throw new Error(`User not found`)
+    }
+
+    let user = filteredUsers[0]
+    let user_pwd = user.pwd
+    if (user_pwd == pwd) {
+        authenticated = true
+    }
+
+    return [ authenticated, user ]
+}
+
+
+
+// Might use later
 
 /*
 function generateRandomUniqueID() {
@@ -150,13 +189,3 @@ app.delete('/users', (req, res) => {
 });
 */
 
-// eslint-disable-next-line
-app.listen(process.env.PORT || port, () => {
-  // eslint-disable-next-line
-  if (process.env.PORT) {
-    // eslint-disable-next-line
-    console.log(`REST API is listening on port ${process.env.PORT}`);
-  } else {
-    console.log(`REST API is listening on port ${port}`);
-  }
-});

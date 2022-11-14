@@ -45,6 +45,4 @@ async function findUserByName(name) {
   }
 }
 
-
 module.exports = { getUsers, addUser };
-//module.exports.addUser = addUser;

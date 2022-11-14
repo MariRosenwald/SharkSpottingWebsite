@@ -11,51 +11,48 @@ app.use(cors());
 app.use(express.json());
 
 app.listen(process.env.PORT || port, () => {
-    if (process.env.PORT) {
-        console.log(`REST API is listening on port ${process.env.PORT}`);
-    }
-    else {
-        console.log(`REST API is listening on port ${port}`);
-    }
+  if (process.env.PORT) {
+    console.log(`REST API is listening on port ${process.env.PORT}`);
+  } else {
+    console.log(`REST API is listening on port ${port}`);
+  }
 });
 
 // Data (for testing)
 
-const users = { 
-    users_list :
-    [
-       { 
-          email : 'pkmarsh@calpoly.edu',
-          pwd : 'dog',
-          admin : false
-       },
-       {
-          email : 'mari@mari.com',
-          pwd : 'cat',
-          admin : true
-       } 
-    ]
-}
-
+const users = {
+  users_list: [
+    {
+      email: 'pkmarsh@calpoly.edu',
+      pwd: 'dog',
+      admin: false
+    },
+    {
+      email: 'mari@mari.com',
+      pwd: 'cat',
+      admin: true
+    }
+  ]
+};
 
 const requests = {
   request_list: []
 };
 
 const data = {
-    data_list: [
-      {
-        title: 'shark pics',
-        location: 'https://google.com',
-        description: 'test'
-      },
-      {
-        title: 'boat pics',
-        location: 'https://www.yahoo.com/?guccounter=1',
-        description: 'backend validation'
-      }
-    ]
-  };
+  data_list: [
+    {
+      title: 'shark pics',
+      location: 'https://google.com',
+      description: 'test'
+    },
+    {
+      title: 'boat pics',
+      location: 'https://www.yahoo.com/?guccounter=1',
+      description: 'backend validation'
+    }
+  ]
+};
 
 // API Endpoints
 
@@ -64,37 +61,34 @@ app.get('/', (req, res) => {
 });
 
 app.get('/user', (req, res) => {
-    res.send(data);
-});
-  
-app.get('/login', (req, res) => {
-    res.send(users);
+  res.send(data);
 });
 
+app.get('/login', (req, res) => {
+  res.send(users);
+});
 
 app.get('/requests', (req, res) => {
   res.send(requests);
 });
 
 app.get('/auth', async (req, res) => {
-    const email = req.query.email;
-    const pwd = req.query.pwd;
-    if (email === undefined) {
-        res.status(500).send("No email specified").end();
-    } else if (pwd === undefined) {
-        res.status(500).send('No password specified').end();
+  const email = req.query.email;
+  const pwd = req.query.pwd;
+  if (email === undefined) {
+    res.status(500).send('No email specified').end();
+  } else if (pwd === undefined) {
+    res.status(500).send('No password specified').end();
+  } else {
+    let auth, user;
+    try {
+      //eslint-disable-next-line
+      [auth, user] = await authenticate(email, pwd);
+      res.status(201).send(auth).end();
+    } catch {
+      res.status(404).send(`No user '${email}' found`).end();
     }
-    else {
-        let auth, user
-        try {
-            //eslint-disable-next-line
-            [ auth, user ] = await authenticate(email, pwd)
-            res.status(201).send(auth).end();
-        }
-        catch {
-            res.status(404).send(`No user '${email}' found`).end();
-        }
-    }   
+  }
 });
 
 app.post('/requests', (req, res) => {
@@ -113,41 +107,37 @@ function addRequest(request) {
 }
 
 app.post('/auth', async (req, res) => {
-    const user = req.body;
-    const savedUser = await userServices.addUser(user);
-    if (savedUser)
-        res.status(201).send(savedUser);
-    else
-        res.status(500).end();
+  const user = req.body;
+  const savedUser = await userServices.addUser(user);
+  if (savedUser) res.status(201).send(savedUser);
+  else res.status(500).end();
 });
 
 // Helper functions
 
 async function authenticate(email, pwd) {
-    let authenticated = false
+  let authenticated = false;
 
-    let filteredUsers = await userServices.getUsers(email);
-        
-    if (filteredUsers === undefined) {
-        // Mongodb is not conected, load users from backend.js for testing purposes
-        console.log("mongodb is not connected, loading users from backend.js")
-        filteredUsers = users['users_list'].filter((user) => user['email'] === email);
-    }
+  let filteredUsers = await userServices.getUsers(email);
 
-    if (filteredUsers.length < 1) {
-        throw new Error(`User not found`)
-    }
+  if (filteredUsers === undefined) {
+    // Mongodb is not conected, load users from backend.js for testing purposes
+    console.log('mongodb is not connected, loading users from backend.js');
+    filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+  }
 
-    let user = filteredUsers[0]
-    let user_pwd = user.pwd
-    if (user_pwd == pwd) {
-        authenticated = true
-    }
+  if (filteredUsers.length < 1) {
+    throw new Error(`User not found`);
+  }
 
-    return [ authenticated, user ]
+  let user = filteredUsers[0];
+  let user_pwd = user.pwd;
+  if (user_pwd == pwd) {
+    authenticated = true;
+  }
+
+  return [authenticated, user];
 }
-
-
 
 // Might use later
 
@@ -188,4 +178,3 @@ app.delete('/users', (req, res) => {
     res.status(204).end();
 });
 */
-

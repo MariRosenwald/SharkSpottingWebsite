@@ -25,7 +25,7 @@ function UsersTableBody(props) {
     return (
       <tr key={index}>
         <td>{row.email}</td>
-        <td>{row.password}</td>
+        <td>{row.pwd}</td>
       </tr>
     );
   });

@@ -2,8 +2,9 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const port = 5050;
+const userServices = require('./user-services');
 
-const users = { 
+/*const users = { 
     users_list :
     [
        { 
@@ -15,7 +16,7 @@ const users = {
           password : 'cat'
        }
     ]
- }
+ }*/
 
 app.use(cors());
 app.use(express.json());
@@ -24,7 +25,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.get('/auth', (req, res) => {
+app.get('/auth', async (req, res) => {
     const email = req.query.email
     const pwd = req.query.pwd
     if (email === undefined) {
@@ -36,19 +37,26 @@ app.get('/auth', (req, res) => {
     
     else {
         authenticated = false
-        filteredUsers = users['users_list'].filter((user) =>
-            user['email'] === email
-        );
+        const filteredUsers = await userServices.getUsers(email);
         if (filteredUsers.length < 1) {
             res.status(404).send(`No user '${email}' found`).end();
         }
         user = filteredUsers[0]
-        user_pwd = user['password']
+        user_pwd = user.pwd
         if (user_pwd == pwd) {
             authenticated = true
         }
-        res.send(authenticated);
+        res.send(authenticated).end();
     }   
+});
+
+app.post('/auth', async (req, res) => {
+    const user = req.body;
+    const savedUser = await userServices.addUser(user);
+    if (savedUser)
+        res.status(201).send(savedUser);
+    else
+        res.status(500).end();
 });
 
 /*

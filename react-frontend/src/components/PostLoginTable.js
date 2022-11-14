@@ -13,9 +13,9 @@ function DataTableHeader() {
   return (
     <thead>
       <tr>
-        <th className="th">Title</th>
-        <th className="th">Location</th>
-        <th className="th">Description</th>
+        <th>Title</th>
+        <th>Location</th>
+        <th>Description</th>
       </tr>
     </thead>
   );
@@ -25,7 +25,7 @@ function DataTableBody(props) {
   const rows = props.data.map((row, index) => {
     return (
       <tr key={index}>
-        <td className="td">{row.title}</td>
+        <td>{row.title}</td>
         <td>
           <a href={row.location}>{row.location}</a>
         </td>

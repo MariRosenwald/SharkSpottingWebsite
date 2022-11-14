@@ -12,7 +12,7 @@ export function TeamsPage() {
       <div>
         <PostLogin />
       </div>
-      <div style={{ marginTop: 5 + 'em' }}>
+      <div style={{ paddingTop: 5 + 'em' }}>
         <AdminLogin />
       </div>
     </div>

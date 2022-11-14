@@ -1,15 +1,14 @@
-import React from "react"
-import './LoginForm.css'
+import React from 'react';
+import './LoginForm.css';
 //import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios';
 
 export class LoginForm extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      emailOrUsername: "",
-      password: "",
+      emailOrUsername: '',
+      password: ''
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -20,7 +19,7 @@ export class LoginForm extends React.Component {
     event.preventDefault();
     const target = event.target;
     this.setState({
-      [target.name]: target.value,
+      [target.name]: target.value
     });
   }
 
@@ -28,22 +27,23 @@ export class LoginForm extends React.Component {
     event.preventDefault();
 
     try {
-      const response = await axios.get('http://localhost:5050/auth', { params : {email: this.state.emailOrUsername, pwd: this.state.password}});
-      alert(`Authenticated: ${response.data}`)
+      const response = await axios.get('http://localhost:5050/auth', {
+        params: { email: this.state.emailOrUsername, pwd: this.state.password }
+      });
+      alert(`Authenticated: ${response.data}`);
     } catch {
-      alert('Email not found')
+      alert('Email not found');
     }
   }
 
-
-
   render() {
-    return (<div className="Auth-form-container">
-      <form className="Auth-form" onSubmit={this.handleSubmit}>
-        <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+    return (
+      <div className="Auth-form-container">
+        <form className="Auth-form" onSubmit={this.handleSubmit}>
+          <div className="Auth-form-content">
+            <h3 className="Auth-form-title">Sign In</h3>
             <div className="form-group mt-3">
-              <label>Email address</label>
+              <label style={{ paddingRight: 0.5 + 'em' }}>Email address</label>
               <input
                 type="text"
                 name="emailOrUsername"
@@ -53,7 +53,7 @@ export class LoginForm extends React.Component {
               />
             </div>
             <div className="form-group mt-3">
-              <label>Password</label>
+              <label style={{ paddingLeft: 2 + 'em', paddingRight: 0.5 + 'em' }}>Password</label>
               <input
                 name="password"
                 placeholder="Enter password"
@@ -63,12 +63,17 @@ export class LoginForm extends React.Component {
               />
             </div>
             <div className="d-grid gap-2 mt-3">
-              <input type="submit" value="Submit" />
+              <input
+                style={{ marginLeft: 7 + 'em', marginTop: 1 + 'em' }}
+                type="submit"
+                value="Submit"
+              />
             </div>
-          <p></p>
-          <p></p>
-        </div>
-      </form>
-    </div>)
+            <p></p>
+            <p></p>
+          </div>
+        </form>
+      </div>
+    );
   }
 }

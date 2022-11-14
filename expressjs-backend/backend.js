@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const app = express();
 const port = 5050;
+const uuid = require('uuid');
 
 const users = {
   users_list: [
@@ -31,6 +32,10 @@ const data = {
   ]
 };
 
+const requests = {
+  request_list: []
+};
+
 app.use(cors());
 app.use(express.json());
 
@@ -44,6 +49,10 @@ app.get('/user', (req, res) => {
 
 app.get('/login', (req, res) => {
   res.send(users);
+});
+
+app.get('/requests', (req, res) => {
+  res.send(requests);
 });
 
 app.get('/auth', (req, res) => {
@@ -68,6 +77,20 @@ app.get('/auth', (req, res) => {
   }
 });
 
+app.post('/requests', (req, res) => {
+  const request = req.body;
+  const updatedRequest = addRequest(request);
+  res.status(201).send(updatedRequest).end();
+});
+
+function addRequest(request) {
+  const requestWithID = {
+    name: request.name,
+    description: request.description
+  };
+  requests['request_list'].push(requestWithID);
+  return requestWithID;
+}
 /*
 function generateRandomUniqueID() {
     allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -108,12 +131,11 @@ app.delete('/users', (req, res) => {
 
 // eslint-disable-next-line
 app.listen(process.env.PORT || port, () => {
+  // eslint-disable-next-line
+  if (process.env.PORT) {
     // eslint-disable-next-line
-    if (process.env.PORT) {
-        // eslint-disable-next-line
-        console.log(`REST API is listening on port ${process.env.PORT}`);
-    }
-    else {
-        console.log(`REST API is listening on port ${port}`);
-    }
+    console.log(`REST API is listening on port ${process.env.PORT}`);
+  } else {
+    console.log(`REST API is listening on port ${port}`);
+  }
 });

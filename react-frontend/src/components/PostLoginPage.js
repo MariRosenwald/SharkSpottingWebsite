@@ -22,10 +22,24 @@ export function PostLogin() {
     }
   }
 
+  function updateList(request) {
+    makePostCall(request);
+  }
+
+  async function makePostCall(request) {
+    try {
+      const response = await axios.post('http://localhost:5050/requests', request);
+      return response;
+    } catch (error) {
+      console.log(error);
+      return false;
+    }
+  }
+
   return (
     <div>
       <DataTable data={data} />
-      <Form />
+      <Form handleSubmit={updateList} />
     </div>
   );
 }

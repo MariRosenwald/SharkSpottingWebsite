@@ -22,17 +22,24 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+  res.send('Hello World!');
+});
+
+app.get('/user', (req, res) => {
+    res.send(data);
+});
+  
+app.get('/login', (req, res) => {
+    res.send(users);
 });
 
 app.get('/auth', async (req, res) => {
-    const email = req.query.email
-    const pwd = req.query.pwd
+    const email = req.query.email;
+    const pwd = req.query.pwd;
     if (email === undefined) {
         res.status(500).send("No email specified").end();
-    }
-    else if (pwd === undefined) {
-        res.status(500).send("No password specified").end();
+    } else if (pwd === undefined) {
+        res.status(500).send('No password specified').end();
     }
     
     else {
@@ -86,7 +93,7 @@ app.delete('/users', (req, res) => {
     } else {
         console.log(users.users_list);
         index = users.users_list.findIndex(user => user.id == id);
-        if (index == -1) {
+        if (index == -1) { 
             res.status(404).statusMessage(`ID "${id}" does not exist`).end();
         }
         console.log(index);
@@ -96,6 +103,15 @@ app.delete('/users', (req, res) => {
     res.status(204).end();
 });
 */
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`);
-});      
+
+// eslint-disable-next-line
+app.listen(process.env.PORT || port, () => {
+    // eslint-disable-next-line
+    if (process.env.PORT) {
+        // eslint-disable-next-line
+        console.log(`REST API is listening on port ${process.env.PORT}`);
+    }
+    else {
+        console.log(`REST API is listening on port ${port}`);
+    }
+});

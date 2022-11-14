@@ -27,3 +27,41 @@
   padding-right: 15%;
   font-weight: bolder;
 }
+
+.centered-table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  width: 75%;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #005d71;
+  color: white;
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+.centered-form {
+  text-align: center;
+}
+
+.div-form {
+  display: block;
+  text-align: center;
+  padding-top: 5em;
+}
+.form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}

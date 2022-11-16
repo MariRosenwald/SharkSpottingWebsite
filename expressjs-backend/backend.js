@@ -139,6 +139,19 @@ async function authenticate(email, pwd) {
   return [authenticated, user];
 }
 
+// function randompass(){
+//   characters = "zxcvbnm,./asdfghjkl;'qwertyuiop[]`1234567890-=ZXCVBNM<>?ASDFGHJKL:QWERTYUIOP{}|!@#$%^&*()_+"; 
+//   pass = ""; 
+//   pass_len = 6; 
+  
+//   for(i = 0; i < pass_len; i++){
+//     ix = Math.floor(Math.random()*characters.length); 
+//     pass+=characters[ix]; 
+//   }
+
+//   return pass
+// }
+
 // Might use later
 
 /*

@@ -2,6 +2,9 @@ import React from 'react';
 import './LoginForm.css';
 //import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios';
+//import { Navigate } from 'react-router-dom';
+// import { useAuth } from '../../auth';
+// import { useNavigate } from 'react-router-dom';
 
 export class LoginForm extends React.Component {
   constructor(props) {
@@ -25,22 +28,36 @@ export class LoginForm extends React.Component {
 
   async handleSubmit(event) {
     event.preventDefault();
-
+    // const auth = useAuth();
+    // const navigate = useNavigate();
+    // navigate('/user');
+    // let nav;
     axios
       .get('http://localhost:5050/auth', {
         params: { email: this.state.emailOrUsername, pwd: this.state.password }
       })
       .then((response) => {
         alert(`Authenticated: ${response.data}`);
+        // nav = response.data;
+        //navigate('/user');
+        // if (response.data == true) {
+        //   // this.auth.login(response);
+        //   auth.login(this.response.data);
+        //   navigate('/user');
+        //   // useNavigate('/');
+        // }
       })
       .catch((error) => {
-        if (error.response.data) {
-          alert(`Error: ${error.response.data}`);
+        if (error.response === undefined) {
+          alert(`Error: ${error.response}`);
         } else {
           // client never received a response
           alert('Could not connect to server');
         }
       });
+    // if (nav == true) {
+    //   navigate('/user');
+    // }
   }
 
   render() {

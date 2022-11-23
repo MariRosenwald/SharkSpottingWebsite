@@ -1,16 +1,22 @@
 import * as React from 'react';
+import { useAuth } from '../../auth';
 import './Navbar.css';
 
-
-
 export function Navbar() {
+  const auth = useAuth();
+  let login;
+  if (!auth.user) {
+    login = <a href="/login">Login</a>;
+  } else {
+    login = <a href="/user">Profile</a>;
+  }
   return (
     <div className="navbar">
       <a href="/">About</a>
       <a href="/teams">Teams</a>
       <a href="/members">Members</a>
       <a href="/news">News</a>
-      <a href="/login">Login</a>
+      {login}
     </div>
     // <section style={flex}>
     //   <section className="About-sec">

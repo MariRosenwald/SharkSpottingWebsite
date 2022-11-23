@@ -6,18 +6,23 @@ import { LoginPage } from './LoginPage';
 import { NewsPage } from './NewsPage';
 import { TeamsPage } from './TeamsPage';
 import { MembersPage } from './MembersPage';
+import { PostLogin } from './PostLoginPage';
+import { AuthProvider } from './auth';
 
 export function Page() {
   return (
-    <BrowserRouter basename="/">
-      <Routes>
-        <Route path="/" element={<AboutPage />} />
-        <Route path="/news" element={<NewsPage />} />
-        <Route path="/members" element={<MembersPage />} />
-        <Route path="/teams" element={<TeamsPage />} />
-        <Route path="/login" element={<LoginPage />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter basename="/">
+        <Routes>
+          <Route path="/" element={<AboutPage />} />
+          <Route path="/news" element={<NewsPage />} />
+          <Route path="/members" element={<MembersPage />} />
+          <Route path="/teams" element={<TeamsPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/user" element={<PostLogin />} />
+        </Routes>
+      </BrowserRouter>
+    </AuthProvider>
   );
 }
 

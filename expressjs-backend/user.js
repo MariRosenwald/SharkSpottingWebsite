@@ -6,6 +6,7 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
       trim: true,
+      unique: true
     },
     pwd: {
       type: String,
@@ -18,4 +19,4 @@ const UserSchema = new mongoose.Schema(
 
 const User = mongoose.model("User", UserSchema);
 
-module.exports = User;
+module.exports = { User, UserSchema };

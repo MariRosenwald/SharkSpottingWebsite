@@ -4,7 +4,8 @@
   "description": "",
   "main": "backend.js",
   "scripts": {
-    "start": "nodemon backend.js",
+    "start": "node backend.js",
+    "dev": "nodemon backend.js",
     "lint": "eslint .",
     "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc",
     "test": "jest --collectCoverage --forceExit"

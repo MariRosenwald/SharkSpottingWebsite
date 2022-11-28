@@ -1,7 +1,6 @@
 import * as React from 'react';
 //import axios from 'axios';
 import { Header } from './common/header/Header';
-import './Pages.css';
 import './MembersPage.css';
 import FK from './membersImg/Franz_Kurfess.jpg'
 import NW from './membersImg/Nicholas_Wachter.jpeg'

@@ -26,6 +26,7 @@
   padding-left: 15%;
   padding-right: 15%;
   font-weight: bolder;
+  color: #005d71;
 }
 
 .centered-table {
@@ -64,4 +65,12 @@ td {
   margin-left: auto;
   margin-right: auto;
   text-align: left;
+}
+
+.h2 {
+  color: #005d71;
+}
+
+.newsLink {
+  color: #c8a326;
 }

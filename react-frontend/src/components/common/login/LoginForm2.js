@@ -51,10 +51,11 @@ export function LoginForm2() {
     <div className="Auth-form-container">
       <form className="Auth-form" onSubmit={handleSubmit}>
         <div className="Auth-form-content">
-          <h3 className="Auth-form-title">Sign In</h3>
+          <h3 className="Auth-form-title">Log In</h3>
           <div className="form-group mt-3">
             <label style={{ paddingRight: 0.5 + 'em' }}>Email address</label>
             <input
+              className="forminput"
               type="text"
               name="emailOrUsername"
               placeholder="Enter email"
@@ -65,6 +66,7 @@ export function LoginForm2() {
           <div className="form-group mt-3">
             <label style={{ paddingLeft: 2 + 'em', paddingRight: 0.5 + 'em' }}>Password</label>
             <input
+              className="forminput"
               name="password"
               placeholder="Enter password"
               type="password"
@@ -74,6 +76,7 @@ export function LoginForm2() {
           </div>
           <div className="d-grid gap-2 mt-3">
             <input
+              className="inputbutton"
               style={{ marginLeft: 7 + 'em', marginTop: 1 + 'em' }}
               type="submit"
               value="Submit"

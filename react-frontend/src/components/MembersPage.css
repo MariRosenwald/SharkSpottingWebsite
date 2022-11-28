@@ -1,121 +1,121 @@
 /* Three columns side by side */
 .column {
-    float: left;
-    width: 30%;
-    margin-bottom: 16px;
-    padding: 0 8px;
-  }
-  
-  /* Display the columns below each other instead of side by side on small screens */
-  @media screen and (max-width: 650px) {
-    .column {
-      width: 100%;
-      display: block;
-    }
-  }
-  
-  /* Add some shadows to create a card effect */
-  .card {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Some left and right padding inside the container */
-  .container {
-    padding: 0 16px;
-  }
-  
-  /* Clear floats */
-  .container::after, .row::after {
-    content: "";
-    clear: both;
-    display: table;
-  }
-  
-  .title {
-    color: grey;
-  }
-  
-  .button {
-    border: none;
-    outline: 0;
-    display: inline-block;
-    padding: 8px;
-    color: white;
-    background-color: #000;
-    text-align: center;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  .button:hover {
-    background-color: #555;
-  }
+  float: left;
+  width: 30%;
+  margin-bottom: 16px;
+  padding: 0 8px;
+}
 
-  .heading {
-    font: Arial Black;
-    font-size: 350%;
-    text-align: center;
-    color: #005d71;
-    padding-bottom: 20px;
-    border-bottom: 0.25rem solid #c8a326;
-    border-bottom-color: #c8a326;
-    box-shadow: 0 4px 4px -4px black;
-    margin-left: 33%;
-    margin-right: 33%;
-  }
-  
-  .centered {
-    position: relative;
-    margin-left: auto;
-    margin-right: auto;
+/* Display the columns below each other instead of side by side on small screens */
+@media screen and (max-width: 650px) {
+  .column {
+    width: 100%;
     display: block;
-    width: 50%;
-    height: 25%;
   }
-  
-  .paragraph-text {
-    padding-top: 2.5%;
-    text-align: center;
-    padding-left: 15%;
-    padding-right: 15%;
-    font-weight: bolder;
-  }
-  
-  .centered-table {
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: collapse;
-    width: 75%;
-  }
-  
-  th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
-    background-color: #005d71;
-    color: white;
-    border: 1px solid #000;
-    padding: 8px;
-  }
-  
-  td {
-    border: 1px solid #000;
-    padding: 8px;
-  }
-  
-  .centered-form {
-    text-align: center;
-  }
-  
-  .div-form {
-    display: block;
-    text-align: center;
-    padding-top: 5em;
-  }
-  .form {
-    display: inline-block;
-    margin-left: auto;
-    margin-right: auto;
-    text-align: left;
-  }
-  
+}
+
+/* Add some shadows to create a card effect */
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Some left and right padding inside the container */
+.container {
+  padding: 0 16px;
+}
+
+/* Clear floats */
+.container::after,
+.row::after {
+  content: '';
+  clear: both;
+  display: table;
+}
+
+.title {
+  color: #c8a326;
+}
+
+.button {
+  border: none;
+  outline: 0;
+  display: inline-block;
+  padding: 8px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.heading {
+  font: Arial Black;
+  font-size: 350%;
+  text-align: center;
+  color: #005d71;
+  padding-bottom: 20px;
+  border-bottom: 0.25rem solid #c8a326;
+  border-bottom-color: #c8a326;
+  box-shadow: 0 4px 4px -4px black;
+  margin-left: 33%;
+  margin-right: 33%;
+}
+
+.centered {
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 50%;
+  height: 25%;
+}
+
+.paragraph-text {
+  padding-top: 2.5%;
+  text-align: center;
+  padding-left: 15%;
+  padding-right: 15%;
+  font-weight: bolder;
+}
+
+.centered-table {
+  margin-left: auto;
+  margin-right: auto;
+  border-collapse: collapse;
+  width: 75%;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #005d71;
+  color: white;
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+td {
+  border: 1px solid #000;
+  padding: 8px;
+}
+
+.centered-form {
+  text-align: center;
+}
+
+.div-form {
+  display: block;
+  text-align: center;
+  padding-top: 5em;
+}
+.form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}

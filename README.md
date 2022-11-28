@@ -1,60 +1,78 @@
+![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/react-frontend.js.yml/badge.svg)
+![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/expressjs-backend.js.yml/badge.svg)
+
+
 # **How to Run**
 
-* Install dependencies for server (backend)
+- Install dependencies for server (backend)
 
   ```bash
+  cd expressjs-backend
   npm install
   ```
 
-* Install dependencies for client (frontend)
+- Install dependencies for client (frontend)
 
   ```bash
-  cd src-client
+  cd react-frontend
   npm install
   ```
 
-* Start the app
+- Start the frontend
 
   ```bash
-  cd SharkSpottingWebsite
-  npm run dev-all
+  cd react-frontend
+  npm start
   ```
 
-* The website should now be running at localhost:8080
+- Start the backend
+
+  ```bash
+  cd expressjs-backend
+  npm start
+  ```
+
+- The website should now be running
+
+- Run linter
+
+```bash
+cd react-frontend
+npm run lint
+```
+
+- Run prettier text formatter
+
+```bash
+cd react-frontend
+npm run format
+```
 
 ## **Folder Structure**
 
-| Name | Description |
-| ------------------------ | ------------------------------------------------------------------------------------------ |
-| **src**                  | Source code for server (Express)          |
-| **src-client**           | Source code for client (React)         |
-| **public**               | Contains static html pages                                              |
-| **src**/server.ts        | Entry point to server application                                                            |
-| **src-client**/index.tsx | Entry point to client                                   |
-| **.vscode**              | Contains VS Code specific settings                                                         |
-| **dist**                 | Contains the output from TypeScript build for server (Node).                               |
-| **public/dist**          | Contains the output from TypeScript build for client                             |
-| **node_modules**         | Contains all node dependencies                           |
-| tsconfig.json            | Config settings for compiling server code written in TypeScript                            |
-| tslint.json              | Config settings for TSLint code style checking                                             |
+| Name                     | Description                                                     |
+| ------------------------ | --------------------------------------------------------------- |
+| **expressjs-backend**    | Source code for server (Express)                                |
+| ---/backend.js           | Entry point to server application                               |
+| **react-frontend**       | Source code for client (React)                                  |
+| ---/index.js             | Entry point to client                                           |
+| ---/.eslintrc.json       | Config settings for ESLint code style checking                  |
+| ---/.prettierrc          | Config settings for Prettier formatter                          |
+| ---**/public**           | Contains static html pages                                      |
+| ------**/resources**     | Images/static page data                                         |
 
 ## **NPM Scripts**
 
-| Npm Script          | Description                                                                             |
-| ------------------- | --------------------------------------------------------------------------------------- |
-| `start`             | Runs node on `dist/server.js` which is the app entry point at localhost:                |
-| `dev`               | Runs backend server in watch mode at localhost:3000.                                    |
-| `build`             | Runs build tasks for backend                                                            |
-| `lint`              | Lint backend TS files                                                                   |
-| `dev:client`        | Runs frontend server in watch mode at localhost:8080.                                   |
-| `dev-all`           | Runs project (backend at localhost:3000 and frontend at localhost:8080]) in watch mode. |
-| `build-all`         | Full build. Runs ALL build tasks for backend and frontend                               |
-| `lint-all`          | Lint frontend and backend TS files                                                      |
+### Frontend
 
-## **VS Code Debugging**
+| Npm Script   | Description                                                                             |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `start`      | Runs node on `index.js` which is the app entry point                                    |
+| `lint`       | Lint frontend JS files                                                                  |
+| `format`     | Format frontend JS files                                                                |
 
-### Launch All:
+### Backend
 
-Starts debug configuration `Launch Server` and `Launch Browser`.
-
-
+| Npm Script   | Description                                                                             |
+| ------------ | --------------------------------------------------------------------------------------- |
+| `start`      | Runs node on `backend.js` which is the backend entry point                              |

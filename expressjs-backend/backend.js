@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const port = 5050;
 const userServices = require('./user-services');
+const fileServices = require('./file-services');
 //const uuid = require('uuid');
 
 // Setup
@@ -91,6 +92,25 @@ app.get('/auth', async (req, res) => {
   }
 });
 
+app.get('/login/admin-users', async (req, res) => {
+  try {
+    let users = await userServices.getAllUsers();
+    res.status(201).send(users).end();
+  } catch {
+    res.status(404).send('No users found').end();
+  }
+});
+
+
+app.get('/login/files', async (req, res) => {
+  try {
+    let files = await fileServices.getAllFiles();
+    res.status(201).send(files).end();
+  } catch {
+    res.status(404).send('No files found').end();
+  }
+});
+
 app.post('/requests', (req, res) => {
   const request = req.body;
   const updatedRequest = addRequest(request);
@@ -112,6 +132,13 @@ app.post('/auth', async (req, res) => {
   if (savedUser) res.status(201).send(savedUser);
   else res.status(500).end();
 });
+
+app.post('/login/files', async (req, res) => {
+  const file = req.body;
+  const savedFile = await fileServices.addFile(file);
+  if (savedFile) res.status(201).send(savedFile);
+  else res.status(500).end();
+})
 
 // Helper functions
 

@@ -12,7 +12,7 @@ import SM from './membersImg/Franz_Kurfess.jpg';
 
 export function MembersPage() {
   return (
-    <div style={{ paddingLeft: 10 + 'px' }}>
+    <div>
       <div>
         <Header />
         <h1 className="heading">Members</h1>

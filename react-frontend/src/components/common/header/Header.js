@@ -2,24 +2,6 @@ import * as React from 'react';
 import { Navbar } from '../navbar/Navbar';
 import './Header.css';
 
-const image = {
-  width: '100%',
-  height: '300px',
-  
-};
-
-const centered = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  color: 'white'
-};
-
-const container = {
-  position: 'relative',
-  textAlign: 'center'
-};
 
 const topHeader = {
   backgroundColor: '#005D71',
@@ -55,15 +37,7 @@ export function Header() {
           <Navbar />
         </section>
       </section>
-      <section className="bottomHeader">
-        {/* <section className="bottomHeaderFullName">
-          Drones For Marine Science and Agriculture
-        </section> */}
-        <div style={container}>
-          <img alt="Header" src="/resources/ocean.jpg" style={image} />
-          <h1 style={centered}>Drones for Marine Science and Agriculture</h1>
-        </div>
-      </section>
+
     </section>
   );
 }

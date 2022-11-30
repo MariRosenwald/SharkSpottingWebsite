@@ -9,10 +9,10 @@ import { useNavigate } from 'react-router-dom';
 export function AdminPage() {
   const navigate = useNavigate();
 
-  const [login, setLogin] = useState([]);
+  const [users, setUsers] = useState([]);
   useEffect(() => {
     fetchUsers().then((result) => {
-      if (result) setLogin(result);
+      if (result) setUsers(result);
     });
   }, []);
 
@@ -61,10 +61,78 @@ export function AdminPage() {
     }
   }
 
+  async function removeUser(index) {
+    let email = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+
+    let emailToRemove = users[index].email;
+
+    try {
+      await axios.delete('http://localhost:5050/user', { data: {
+        emailToRemove: emailToRemove,
+        email: email, 
+        token: token
+      }});
+      location.reload();
+    } catch (error) {
+      if (!error.response) {
+        console.log("Server error");
+      }
+      else if (error.response.status == 401) {
+        // Unauthorized, redirect to login screen
+        navigate('/login', { replace: 'true' });
+      } else {
+        console.log(error.response.data);
+      }
+    }
+  }
+
+  const [email, setEmail] = useState("");
+
+  function handleInputChange(event) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    if (name == "email") {
+      setEmail(value)
+    }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    let adminEmail = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+
+    try {
+      await axios.post('http://localhost:5050/user', {email: email}, {
+        params: { email: adminEmail, token: token}
+      });
+      location.reload();
+    } catch(error) {
+      if (error.response.data) {
+        alert(error.response.data);
+      }
+    }
+    setEmail("");
+  }
+
   return (
     <div>
       <Header />
-      <UsersTable login={login} />
+      <h1 className="heading">Admin Portal</h1>
+      <UsersTable users={users} removeUser={removeUser}/>
+      <p></p>
+      <form className="Auth-form" onSubmit={handleSubmit}>
+        <input 
+          name="email"
+          placeholder="Email"
+          value={email}
+          onChange={handleInputChange} />
+        <input
+          type="submit"
+          value="Add"
+        />
+      </form>
       <div style={{ marginTop: 5 + 'em' }}>
         <RequestTable requests={request} />
       </div>

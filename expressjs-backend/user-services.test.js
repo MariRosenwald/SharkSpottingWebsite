@@ -90,6 +90,12 @@ test("Adding an invalid user", async () => {
     expect(result).toBeFalsy();
 })
 
+// deleteUser
+
+test("Deleting a user", async () => {
+  await userServices.deleteUser("johnoliver@tonightshow.com");
+})
+
 // isAdmin
 
 test("Checking if a valid user is an admin", async () => {

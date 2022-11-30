@@ -28,25 +28,7 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/files', async (req, res) => {
-
-  const email = req.query.email;
-  const token = req.query.token;
-
-  if (!await checkToken(email, token)) {
-    // 401 unauthorized
-    res.status(401).end();
-  } else {
-
-    try {
-      let files = await fileServices.getAllFiles();
-      res.status(200).send(files).end()
-    }
-    catch {
-      res.status(404).send('Could not connect').end();
-    }
-  }
-});
+// User
 
 // Requires admin authorization
 app.get('/user', async (req, res) => {
@@ -68,9 +50,83 @@ app.get('/user', async (req, res) => {
   }
 });
 
+app.post('/user', async (req, res) => {
+  const newUserEmail = req.body.email;
+  const email = req.query.email;
+  const token = req.query.token;
+  
+  if (!await checkToken(email, token, true)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+    console.log(newUserEmail)
+    if (newUserEmail === undefined || newUserEmail === "") {
+      res.status(500).send("No email specified").end();
+    } else {
+      const newUser = {
+        email: newUserEmail,
+        pwd: generatePassword(),
+        admin: false
+      };
+      const user = await userServices.addUser(newUser);
+      if (user) {
+        res.status(200).end();
+      } else {
+        res.status(500).send(`Could not create user '${newUserEmail}'`).end();
+      }
+      
+    }
+  }
+})
+
+app.delete('/user', async (req, res) => {
+  const emailToRemove = req.body.emailToRemove;
+  const email = req.body.email;
+  const token = req.body.token;
+
+  if (!await checkToken(email, token, true)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+    await userServices.deleteUser(emailToRemove);
+  }
+  res.status(200).end();
+});
+
 app.get('/requests', (req, res) => {
   res.send(requests);
 });
+
+// Files
+
+app.get('/files', async (req, res) => {
+
+  const email = req.query.email;
+  const token = req.query.token;
+
+  if (!await checkToken(email, token)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+
+    try {
+      let files = await fileServices.getAllFiles();
+      res.status(200).send(files).end()
+    }
+    catch {
+      res.status(404).send('Could not connect').end();
+    }
+  }
+});
+
+app.post('/files', async (req, res) => {
+  const file = req.body;
+  const savedFile = await fileServices.addFile(file);
+  if (savedFile) res.status(201).send(savedFile);
+  else res.status(500).end();
+});
+
+// Authorization
 
 app.get('/auth', async (req, res) => {
 
@@ -113,25 +169,10 @@ app.get('/auth', async (req, res) => {
   }
 });
 
-app.get('/login/admin-users', async (req, res) => {
-  try {
-    let users = await userServices.getAllUsers();
-    res.status(201).send(users).end();
-  } catch {
-    res.status(404).send('No users found').end();
-  }
-});
+// Requests
 
-
-app.get('/login/files', async (req, res) => {
-
-
-  try {
-    let files = await fileServices.getAllFiles();
-    res.status(201).send(files).end();
-  } catch {
-    res.status(404).send('No files found').end();
-  }
+app.get('/requests', (req, res) => {
+  res.send(requests);
 });
 
 app.post('/requests', (req, res) => {
@@ -139,6 +180,8 @@ app.post('/requests', (req, res) => {
   const updatedRequest = addRequest(request);
   res.status(201).send(updatedRequest).end();
 });
+
+// Helper functions
 
 function addRequest(request) {
   const requestWithID = {
@@ -148,22 +191,6 @@ function addRequest(request) {
   requests['request_list'].push(requestWithID);
   return requestWithID;
 }
-
-app.post('/auth', async (req, res) => {
-  const user = req.body;
-  const savedUser = await userServices.addUser(user);
-  if (savedUser) res.status(201).send(savedUser);
-  else res.status(500).end();
-});
-
-app.post('/login/files', async (req, res) => {
-  const file = req.body;
-  const savedFile = await fileServices.addFile(file);
-  if (savedFile) res.status(201).send(savedFile);
-  else res.status(500).end();
-})
-
-// Helper functions
 
 async function checkPassword(email, pwd) {
 
@@ -196,14 +223,21 @@ async function checkToken(email, token, admin = false) {
 }
 
 function generateToken() {
-    const  allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let token = "";
-    const token_length = 30;
-    for (let i = 0; i < token_length; i++) {
-        let index = Math.floor(Math.random()*allowedCharacters.length);
-        token += allowedCharacters[index];
-    }
-    return token;
+    return randomString(30);
+}
+
+function generatePassword() {
+  return randomString(8);
+}
+
+function randomString(length) {
+  const  allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let randomString = "";
+  for (let i = 0; i < length; i++) {
+      let index = Math.floor(Math.random()*allowedCharacters.length);
+      randomString += allowedCharacters[index];
+  }
+  return randomString;
 }
 
 // function randompass(){
@@ -219,42 +253,3 @@ function generateToken() {
 //   return pass
 // }
 
-// Might use later
-
-/*
-function generateRandomUniqueID() {
-    allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    id = "";
-    id_length = 6;
-    do {
-        for (i = 0; i < id_length; i++) {
-            index = Math.floor(Math.random()*allowedCharacters.length);
-            id += allowedCharacters[index];
-        }
-    } while (users.users_list.filter(user => user.id == id).length > 0)
-    return id;
-}
-
-function addUser(user){
-    user['id'] = generateRandomUniqueID();
-    users['users_list'].push(user);
-    return user;
-}
-
-app.delete('/users', (req, res) => {
-    const id = req.query.id;
-    if (id === undefined) {
-        res.status(500).send("No ID specified").end();
-    } else {
-        console.log(users.users_list);
-        index = users.users_list.findIndex(user => user.id == id);
-        if (index == -1) { 
-            res.status(404).statusMessage(`ID "${id}" does not exist`).end();
-        }
-        console.log(index);
-        users.users_list.splice(index, 1);
-        console.log(users.users_list);
-    }
-    res.status(204).end();
-});
-*/

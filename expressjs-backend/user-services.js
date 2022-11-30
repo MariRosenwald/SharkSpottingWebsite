@@ -55,8 +55,13 @@ async function addUser(user) {
     return savedUser;
   } catch (error) {
     console.log(error);
-    return false;
+    return undefined;
   }
+}
+
+async function deleteUser(email) {
+  const userModel = (await getDbConnection()).model("User", UserSchema);
+  await userModel.deleteOne({email: email});
 }
 
 async function isAdmin(email) {
@@ -77,4 +82,4 @@ async function updateUserToken(email, token) {
   await userModel.updateOne({email: email}, {token: token});
 }
 
-module.exports = { getUsers, addUser, getDbConnection, updateUserToken, getUser, isAdmin };
+module.exports = { getUsers, addUser, getDbConnection, updateUserToken, getUser, isAdmin, deleteUser };

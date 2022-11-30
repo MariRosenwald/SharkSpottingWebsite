@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import DataTable from './PostLoginTable';
+import FilesTable from './FilesTable';
 import axios from 'axios';
 import Form from './RequestForm';
 import './Pages.css';
@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { Header } from './common/header/Header';
 import CookieManager from './CookieManager';
 export function PostLogin() {
-  const [data, setData] = useState([]);
+  const [files, setFiles] = useState([]);
   const auth = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
@@ -17,7 +17,7 @@ export function PostLogin() {
   };
   useEffect(() => {
     fetchAll().then((result) => {
-      if (result) setData(result);
+      if (result) setFiles(result);
     });
   }, []);
 
@@ -62,7 +62,7 @@ export function PostLogin() {
         <Header />
         <h1 className="heading">Welcome {auth.user}!</h1>
       </div>
-      <DataTable data={data} />
+      <FilesTable files={files} admin={false}/>
       <Form handleSubmit={updateList} />
       <button onClick={handleLogout}>Logout</button>
     </div>

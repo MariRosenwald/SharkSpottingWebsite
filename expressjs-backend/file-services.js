@@ -53,4 +53,9 @@ async function addFile(file) {
   }*/
 }
 
-module.exports = { getAllFiles, addFile, getDbConnection };
+async function deleteFile(fileLocation) {
+  const fileModel = (await getDbConnection()).model("File", FileSchema);
+  await fileModel.deleteOne({location: fileLocation});
+}
+
+module.exports = { getAllFiles, addFile, getDbConnection, deleteFile };

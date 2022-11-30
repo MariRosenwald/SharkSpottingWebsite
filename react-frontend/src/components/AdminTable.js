@@ -9,7 +9,7 @@ function UsersTableHeader() {
         <th>Email</th>
         <th>Password</th>
         <th>Admin</th>
-        <th></th>
+        <th>Delete</th>
       </tr>
     </thead>
   );

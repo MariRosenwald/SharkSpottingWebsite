@@ -44,7 +44,7 @@ afterEach(async () => {
 
 // getUsers
 
-test("Fetching all users", async () => {
+test("Fetching all files", async () => {
   const files = await fileServices.getAllFiles();
   expect(files).toBeDefined();
   expect(files.length).toBeGreaterThan(0);
@@ -63,3 +63,10 @@ test("Adding a valid file", async () => {
     expect(result.description).toBe(dummyFile.description);
     expect(result).toHaveProperty("_id");
 })
+
+test("Deleting a file", async () => {
+  await fileServices.deleteFile("boats location");
+  for (const file in await fileServices.getAllFiles()) {
+    expect(file.location == "boats location").toBeFalsy();
+  }
+});

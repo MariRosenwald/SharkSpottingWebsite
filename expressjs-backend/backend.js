@@ -126,6 +126,20 @@ app.post('/files', async (req, res) => {
   else res.status(500).end();
 });
 
+app.delete('/files', async (req, res) => {
+  const fileLocation = req.body.location;
+  const email = req.body.email;
+  const token = req.body.token;
+
+  if (!await checkToken(email, token, true)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+    await fileServices.deleteFile(fileLocation);
+  }
+  res.status(200).end();
+});
+
 // Authorization
 
 app.get('/auth', async (req, res) => {

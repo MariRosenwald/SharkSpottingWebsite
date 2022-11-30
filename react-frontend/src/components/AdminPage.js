@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Header } from './common/header/Header';
+import FilesTable from './FilesTable';
 import UsersTable from './AdminTable';
 import axios from 'axios';
 import RequestTable from './RequestTable';
@@ -13,6 +14,13 @@ export function AdminPage() {
   useEffect(() => {
     fetchUsers().then((result) => {
       if (result) setUsers(result);
+    });
+  }, []);
+
+  const [files, setFiles] = useState([]);
+  useEffect(() => {
+    fetchFiles().then((result) => {
+      if (result) setFiles(result);
     });
   }, []);
 
@@ -61,6 +69,27 @@ export function AdminPage() {
     }
   }
 
+  async function fetchFiles() {
+    let email = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+
+    try {
+      const response = await axios.get('http://localhost:5050/files', {
+        params: { email: email, token: token }
+      });
+      return response.data;
+
+    } catch (error) {
+      if (error.response.status == 401) {
+        // Unauthorized, redirect to login page
+        navigate('/login', { replace: 'true' });
+      } else {
+        console.log(error.response.data)
+      }
+      return false;
+    }
+  }
+
   async function removeUser(index) {
     let email = CookieManager.getCookie("email");
     let token = CookieManager.getCookie("token");
@@ -70,6 +99,32 @@ export function AdminPage() {
     try {
       await axios.delete('http://localhost:5050/user', { data: {
         emailToRemove: emailToRemove,
+        email: email, 
+        token: token
+      }});
+      location.reload();
+    } catch (error) {
+      if (!error.response) {
+        console.log("Server error");
+      }
+      else if (error.response.status == 401) {
+        // Unauthorized, redirect to login screen
+        navigate('/login', { replace: 'true' });
+      } else {
+        console.log(error.response.data);
+      }
+    }
+  }
+
+  async function removeFile(index) {
+    let email = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+
+    let fileLocation = files[index].location;
+
+    try {
+      await axios.delete('http://localhost:5050/files', { data: {
+        location: fileLocation,
         email: email, 
         token: token
       }});
@@ -133,6 +188,9 @@ export function AdminPage() {
           value="Add"
         />
       </form>
+      <div style={{ marginTop: 5 + 'em' }}>
+        <FilesTable files={files} admin={true} removeFile={removeFile}/>
+      </div>
       <div style={{ marginTop: 5 + 'em' }}>
         <RequestTable requests={request} />
       </div>

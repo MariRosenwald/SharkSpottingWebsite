@@ -18,8 +18,8 @@ export function MembersPage() {
         <h1 className="heading">Members</h1>
       </div>
       <div className="row">
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={FK} alt="Franz" width="100" />
             <div className="container">
               <h2>Franz J. Kurfess</h2>
@@ -52,8 +52,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={NW} alt="Nick" width="100" />
             <div className="container">
               <h2>Nicholas Wachter</h2>
@@ -75,8 +75,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={SB} alt="Shaina" width="100" />
             <div className="container">
               <h2>Shaina Bagri</h2>
@@ -102,8 +102,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={RI} alt="Rachel" width="100" />
             <div className="container">
               <h2>Rachel Izenson</h2>
@@ -122,8 +122,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={SS} alt="Sam" width="100" />
             <div className="container">
               <h2>Samuel Sehnert</h2>
@@ -144,8 +144,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={JR} alt="Jake" width="100" />
             <div className="container">
               <h2>Jake Roth</h2>
@@ -161,8 +161,8 @@ export function MembersPage() {
           </div>
         </div>
 
-        <div className="column">
-          <div className="card">
+        <div className="membercolumn">
+          <div className="membercard">
             <img src={SM} alt="Sierra" width="100" />
             <div className="container">
               <h2>Sierra Martin</h2>

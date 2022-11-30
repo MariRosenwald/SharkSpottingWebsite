@@ -64,7 +64,6 @@ async function isAdmin(email) {
   if (user == undefined) {
     return false;
   }
-  console.log(`'${email} admin: ${user.admin}'`)
   return user.admin;
 }
 

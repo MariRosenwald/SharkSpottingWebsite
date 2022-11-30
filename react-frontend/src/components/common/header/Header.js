@@ -3,10 +3,9 @@ import { Navbar } from '../navbar/Navbar';
 import './Header.css';
 
 const image = {
-  width: '110%',
+  width: '100%',
   height: '300px',
-  marginLeft: '-5%',
-  marginRight: '-5%'
+  
 };
 
 const centered = {
@@ -25,11 +24,11 @@ const container = {
 const topHeader = {
   backgroundColor: '#005D71',
   color: 'white',
-  marginLeft: '-10%',
-  marginRight: '-10%',
-  marginTop: '-1rem',
-  paddingLeft: '10%',
-  paddingTop: '1rem',
+  // marginLeft: '-10%',
+  // marginRight: '-10%',
+  // marginTop: '-.5rem',
+  paddingLeft: '1%',
+  paddingTop: '.75rem',
   top: '-1rem',
   paddingBottom: '1rem',
   display: 'flex',

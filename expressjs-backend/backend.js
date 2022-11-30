@@ -4,7 +4,6 @@ const app = express();
 const port = 5050;
 const userServices = require('./user-services');
 const fileServices = require('./file-services');
-//const uuid = require('uuid');
 
 // Setup
 
@@ -19,40 +18,8 @@ app.listen(process.env.PORT || port, () => {
   }
 });
 
-// Data (for testing)
-
-const users = {
-  users_list: [
-    {
-      email: 'pkmarsh@calpoly.edu',
-      pwd: 'dog',
-      admin: false
-    },
-    {
-      email: 'mari@mari.com',
-      pwd: 'cat',
-      admin: true
-    }
-  ]
-};
-
 const requests = {
   request_list: []
-};
-
-const data = {
-  data_list: [
-    {
-      title: 'shark pics',
-      location: 'https://google.com',
-      description: 'test'
-    },
-    {
-      title: 'boat pics',
-      location: 'https://www.yahoo.com/?guccounter=1',
-      description: 'backend validation'
-    }
-  ]
 };
 
 // API Endpoints
@@ -61,12 +28,44 @@ app.get('/', (req, res) => {
   res.send('Hello World!');
 });
 
-app.get('/user', (req, res) => {
-  res.send(data);
+app.get('/files', async (req, res) => {
+
+  const email = req.query.email;
+  const token = req.query.token;
+
+  if (!await checkToken(email, token)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+
+    try {
+      let files = await fileServices.getAllFiles();
+      res.status(200).send(files).end()
+    }
+    catch {
+      res.status(404).send('Could not connect').end();
+    }
+  }
 });
 
-app.get('/login', (req, res) => {
-  res.send(users);
+// Requires admin authorization
+app.get('/user', async (req, res) => {
+  const email = req.query.email;
+  const token = req.query.token;
+
+  if (!await checkToken(email, token, true)) {
+    // 401 unauthorized
+    res.status(401).end();
+  } else {
+
+    try {
+      let users = await userServices.getUsers();
+      res.status(200).send(users).end()
+    }
+    catch {
+      res.status(404).send('Could not connect').end();
+    }
+  }
 });
 
 app.get('/requests', (req, res) => {
@@ -74,18 +73,40 @@ app.get('/requests', (req, res) => {
 });
 
 app.get('/auth', async (req, res) => {
+
+  // Required query parameters
   const email = req.query.email;
   const pwd = req.query.pwd;
+
+  // Check required query parameters
   if (email === undefined) {
     res.status(500).send('No email specified').end();
   } else if (pwd === undefined) {
     res.status(500).send('No password specified').end();
   } else {
-    let auth, user;
+    // Email and pwd are both defined
+    let auth;
     try {
-      //eslint-disable-next-line
-      [auth, user] = await authenticate(email, pwd);
-      res.status(201).send(auth).end();
+      auth = await checkPassword(email, pwd);
+      if (auth) {
+
+        // Generate and send back an access token to be stored as a cookie
+        let token = generateToken();
+        await userServices.updateUserToken(email, token);
+
+        if (await userServices.isAdmin(email)) {
+          // User is an admin
+          res.status(202).send(token).end();
+        } else {
+          // User is not an admin
+          res.status(200).send(token).end();
+        }
+
+      } else {
+
+        // Unauthorized (401)
+        res.status(401).send('Incorrect password').end();
+      }
     } catch {
       res.status(404).send(`No user '${email}' found`).end();
     }
@@ -103,6 +124,8 @@ app.get('/login/admin-users', async (req, res) => {
 
 
 app.get('/login/files', async (req, res) => {
+
+
   try {
     let files = await fileServices.getAllFiles();
     res.status(201).send(files).end();
@@ -142,28 +165,45 @@ app.post('/login/files', async (req, res) => {
 
 // Helper functions
 
-async function authenticate(email, pwd) {
-  let authenticated = false;
+async function checkPassword(email, pwd) {
 
-  let filteredUsers = await userServices.getUsers(email);
+  let user = await userServices.getUser(email);
 
-  if (filteredUsers === undefined) {
-    // Mongodb is not conected, load users from backend.js for testing purposes
-    console.log('mongodb is not connected, loading users from backend.js');
-    filteredUsers = users['users_list'].filter((user) => user['email'] === email);
+  if (user === undefined) {
+    // no user with a matching email was found
+    return false;
   }
 
-  if (filteredUsers.length < 1) {
-    throw new Error(`User not found`);
-  }
+  return user.pwd == pwd;
+}
 
-  let user = filteredUsers[0];
-  let user_pwd = user.pwd;
-  if (user_pwd == pwd) {
-    authenticated = true;
+async function checkToken(email, token, admin = false) {
+  if (email == undefined || token == undefined) {
+    return false;
   }
+  let user = await userServices.getUser(email);
+  if (user === undefined) {
+    // no user with a matching email was found
+    return false;
+  }
+  if (admin) {
+    console.log(user.admin)
+    console.log(user.token)
+    console.log(token)
+    return user.token === token && user.admin;
+  }
+  return user.token === token;
+}
 
-  return [authenticated, user];
+function generateToken() {
+    const  allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let token = "";
+    const token_length = 30;
+    for (let i = 0; i < token_length; i++) {
+        let index = Math.floor(Math.random()*allowedCharacters.length);
+        token += allowedCharacters[index];
+    }
+    return token;
 }
 
 // function randompass(){

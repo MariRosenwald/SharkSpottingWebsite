@@ -24,6 +24,7 @@ beforeEach(async () => {
   let dummyUser = {
     email: "harrypotter@hogwarts.com",
     pwd: "wizard",
+    admin: true
   };
   let result = new userModel(dummyUser);
   await result.save();
@@ -31,6 +32,7 @@ beforeEach(async () => {
   dummyUser = {
     email: "peterpan@neverland.com",
     pwd: "fly",
+    admin: false
   };
   result = new userModel(dummyUser);
   await result.save();
@@ -48,12 +50,19 @@ test("Fetching all users", async () => {
   expect(users.length).toBeGreaterThan(0);
 });
 
-test("Fetching users by email", async () => {
+// getUser
+
+test("Fetching user by email", async () => {
   const userEmail = "harrypotter@hogwarts.com";
-  const users = await userServices.getUsers(userEmail);
-  expect(users).toBeDefined();
-  expect(users.length).toBeGreaterThan(0);
-  users.forEach((user) => expect(user.email).toBe(userEmail));
+  const user = await userServices.getUser(userEmail);
+  expect(user).toBeDefined();
+  expect(user.email).toBe(userEmail);
+});
+
+test("Try fetching user that doesnt exist", async () => {
+  const userEmail = "randomemail@randomemails.com";
+  const user = await userServices.getUser(userEmail);
+  expect(user).toBeUndefined();
 });
 
 // addUser
@@ -62,6 +71,7 @@ test("Adding a valid user", async () => {
     const dummyUser = {
         email: "johnoliver@tonightshow.com",
         pwd: "brittan",
+        admin: false
     };
     const result = await userServices.addUser(dummyUser);
     expect(result).toBeTruthy();
@@ -74,7 +84,33 @@ test("Adding an invalid user", async () => {
     const dummyUser = {
         email: "harrypotter@hogwarts.com",
         pwd: "password",
+        admin: true
     };
     const result = await userServices.addUser(dummyUser);
     expect(result).toBeFalsy();
+})
+
+// isAdmin
+
+test("Checking if a valid user is an admin", async () => {
+  let isAdmin = await userServices.isAdmin("harrypotter@hogwarts.com");
+  expect(isAdmin).toBeTruthy();
+  isAdmin = await userServices.isAdmin("peterpan@neverland.com");
+  expect(isAdmin).toBeFalsy();
+});
+
+test("Looking up a nonexistent user with isAdmin", async () => {
+  let isAdmin = await userServices.isAdmin("randomuser@random.com");
+  expect(isAdmin).toBeFalsy()
+});
+
+// updateUserToken
+
+test("Updating/adding a users token", async () => {
+  const email = "harrypotter@hogwarts.com";
+  const token = "example_token" 
+  await userServices.updateUserToken(email, token);
+  const users = await userServices.getUsers(email);
+  expect(users[0].token).toBeDefined();
+  expect(users[0].token).toBe(token);
 })

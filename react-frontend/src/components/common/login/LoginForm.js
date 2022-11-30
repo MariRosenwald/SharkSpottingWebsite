@@ -1,103 +1,101 @@
-import React from 'react';
+import { React, useState } from 'react';
 import './LoginForm.css';
 //import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios';
-//import { Navigate } from 'react-router-dom';
-// import { useAuth } from '../../auth';
-// import { useNavigate } from 'react-router-dom';
+//import { useAuth } from '../../auth';
+import { useNavigate } from 'react-router-dom';
+import CookieManager from '../../CookieManager';
 
-export class LoginForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      emailOrUsername: '',
-      password: ''
-    };
+export function LoginForm() {
+  const [user, setUser] = useState({
+    email: '',
+    password: ''
+  });
+  const navigate = useNavigate();
 
-    this.handleInputChange = this.handleInputChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+  function handleInputChange(event) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    if (name === 'password') setUser({ email: user['email'], password: value });
+    else setUser({ email: value, password: user['password'] });
   }
 
-  handleInputChange(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const target = event.target;
-    this.setState({
-      [target.name]: target.value
-    });
-  }
 
-  async handleSubmit(event) {
-    event.preventDefault();
-    // const auth = useAuth();
-    // const navigate = useNavigate();
-    // navigate('/user');
-    // let nav;
     axios
       .get('http://localhost:5050/auth', {
-        params: { email: this.state.emailOrUsername, pwd: this.state.password }
+        params: { email: user.email, pwd: user.password }
       })
       .then((response) => {
-        alert(`Authenticated: ${response.data}`);
-        // nav = response.data;
-        //navigate('/user');
-        // if (response.data == true) {
-        //   // this.auth.login(response);
-        //   auth.login(this.response.data);
-        //   navigate('/user');
-        //   // useNavigate('/');
-        // }
+        console.log(response);
+
+        // store user access token and email as cookies
+        CookieManager.setCookie("token", response.data, 1);
+        CookieManager.setCookie("email", user.email, 1);
+
+        if (response.status == 200) {
+          // Regular user
+          navigate('/user', { replace: 'true' });
+        } 
+        else if (response.status == 202) {
+          // Admin user
+          navigate('/admin', { replace: 'true' });
+        }
+        
       })
       .catch((error) => {
+
+        console.log(error);
         if (error.response === undefined) {
-          alert(`Error: ${error.response}`);
-        } else {
-          // client never received a response
           alert('Could not connect to server');
+        } else {
+          alert(`${error.response.data}`);
         }
+
       });
-    // if (nav == true) {
-    //   navigate('/user');
-    // }
+    setUser({ email: '', password: '' });
   }
 
-  render() {
-    return (
-      <div className="Auth-form-container">
-        <form className="Auth-form" onSubmit={this.handleSubmit}>
-          <div className="Auth-form-content">
-            <h3 className="Auth-form-title">Sign In</h3>
-            <div className="form-group mt-3">
-              <label style={{ paddingRight: 0.5 + 'em' }}>Email address</label>
-              <input
-                type="text"
-                name="emailOrUsername"
-                placeholder="Enter email"
-                value={this.state.emailOrUsername}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="form-group mt-3">
-              <label style={{ paddingLeft: 2 + 'em', paddingRight: 0.5 + 'em' }}>Password</label>
-              <input
-                name="password"
-                placeholder="Enter password"
-                type="password"
-                value={this.state.password}
-                onChange={this.handleInputChange}
-              />
-            </div>
-            <div className="d-grid gap-2 mt-3">
-              <input
-                style={{ marginLeft: 7 + 'em', marginTop: 1 + 'em' }}
-                type="submit"
-                value="Submit"
-              />
-            </div>
-            <p></p>
-            <p></p>
+  return (
+    <div className="Auth-form-container">
+      <form className="Auth-form" onSubmit={handleSubmit}>
+        <div className="Auth-form-content">
+          <h3 className="Auth-form-title">Log In</h3>
+          <div className="form-group mt-3">
+            <label style={{ paddingRight: 0.5 + 'em' }}>Email address</label>
+            <input
+              className="forminput"
+              type="text"
+              name="email"
+              placeholder="Enter email"
+              value={user.email}
+              onChange={handleInputChange}
+            />
           </div>
-        </form>
-      </div>
-    );
-  }
+          <div className="form-group mt-3">
+            <label style={{ paddingLeft: 2 + 'em', paddingRight: 0.5 + 'em' }}>Password</label>
+            <input
+              className="forminput"
+              name="password"
+              placeholder="Enter password"
+              type="password"
+              value={user.password}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div className="d-grid gap-2 mt-3">
+            <input
+              className="inputbutton"
+              style={{ marginLeft: 7 + 'em', marginTop: 1 + 'em' }}
+              type="submit"
+              value="Submit"
+            />
+          </div>
+          <p></p>
+          <p></p>
+        </div>
+      </form>
+    </div>
+  );
 }

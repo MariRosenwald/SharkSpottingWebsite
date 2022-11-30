@@ -7,6 +7,7 @@ import { NewsPage } from './NewsPage';
 import { TeamsPage } from './TeamsPage';
 import { MembersPage } from './MembersPage';
 import { PostLogin } from './PostLoginPage';
+import { AdminPage } from './AdminPage';
 import { AuthProvider } from './auth';
 
 export function Page() {
@@ -20,6 +21,7 @@ export function Page() {
           <Route path="/teams" element={<TeamsPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/user" element={<PostLogin />} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

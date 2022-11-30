@@ -13,6 +13,14 @@ const UserSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    token: {
+      type: String,
+      required: false
+    },
+    admin: {
+      type: Boolean,
+      required: true
+    }
   },
   { collection: "users_list" }
 );

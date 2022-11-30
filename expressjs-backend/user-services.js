@@ -32,15 +32,19 @@ async function getDbConnection(local_url) {
 }
     
 
-async function getUsers(name) {
-  const userModel = (await getDbConnection()).model("User", UserSchema);
-  let result;
-  if (name === undefined) {
-    result = await userModel.find();
-  } else {
-    result = await findUserByName(name);
+async function getUsers() {
+  const userModel = (await getDbConnection()).model("User", UserSchema); 
+  return await userModel.find();
+}
+
+async function getUser(email) {
+  let filteredUsers = await findUserByEmail(email);
+  if (filteredUsers.length > 0) {
+    // return the first user with that email
+    return filteredUsers[0];
   }
-  return result;
+  // if no user is found return undefined
+  return undefined;
 }
 
 async function addUser(user) {
@@ -55,9 +59,23 @@ async function addUser(user) {
   }
 }
 
-async function findUserByName(name) {
-  const userModel = (await getDbConnection()).model("User", UserSchema);
-  return await userModel.find({ email: name });
+async function isAdmin(email) {
+  let user = await getUser(email);
+  if (user == undefined) {
+    return false;
+  }
+  console.log(`'${email} admin: ${user.admin}'`)
+  return user.admin;
 }
 
-module.exports = { getUsers, addUser, getDbConnection };
+async function findUserByEmail(email) {
+  const userModel = (await getDbConnection()).model("User", UserSchema);
+  return await userModel.find({ email: email });
+}
+
+async function updateUserToken(email, token) {
+  const userModel = (await getDbConnection()).model("User", UserSchema);
+  await userModel.updateOne({email: email}, {token: token});
+}
+
+module.exports = { getUsers, addUser, getDbConnection, updateUserToken, getUser, isAdmin };

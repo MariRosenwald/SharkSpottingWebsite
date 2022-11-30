@@ -6,6 +6,7 @@ import './Pages.css';
 import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
 import { Header } from './common/header/Header';
+import CookieManager from './CookieManager';
 export function PostLogin() {
   const [data, setData] = useState([]);
   const auth = useAuth();
@@ -21,12 +22,22 @@ export function PostLogin() {
   }, []);
 
   async function fetchAll() {
+    let email = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+
     try {
-      const response = await axios.get('http://localhost:5050/user');
-      return response.data.data_list;
+      const response = await axios.get('http://localhost:5050/files', {
+        params: { email: email, token: token }
+      });
+      return response.data;
+
     } catch (error) {
-      //We're not handling errors. Just logging into the console.
-      console.log(error);
+      if (error.response.status == 401) {
+        // Unauthorized, redirect to login page
+        navigate('/login', { replace: 'true' });
+      } else {
+        console.log(error.response.data)
+      }
       return false;
     }
   }

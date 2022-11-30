@@ -78,3 +78,12 @@ test("Adding an invalid user", async () => {
     const result = await userServices.addUser(dummyUser);
     expect(result).toBeFalsy();
 })
+
+test("Adding a token to user", async () => {
+  const email = "harrypotter@hogwarts.com";
+  const token = "example_token" 
+  await userServices.updateUserToken(email, token);
+  const users = await userServices.getUsers(email);
+  expect(users[0].token).toBeDefined();
+  expect(users[0].token).toBe(token);
+})

@@ -1,10 +1,10 @@
 /* Three columns side by side */
 .membercolumn {
   float: left;
-  width: 30%;
+  width: 32.15%;
   margin-bottom: 16px;
   padding: 0 8px;
-  height: 865px;
+  height: 800px;
 }
 
 /* Display the columns below each other instead of side by side on small screens */
@@ -18,7 +18,12 @@
 /* Add some shadows to create a card effect */
 .membercard {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  height: 850px;
+  height: 785px;
+}
+
+.imgs {
+  padding-left: 1rem;
+  padding-top: 1rem;
 }
 
 /* Some left and right padding inside the container */

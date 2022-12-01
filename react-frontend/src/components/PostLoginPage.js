@@ -3,16 +3,15 @@ import FilesTable from './FilesTable';
 import axios from 'axios';
 import Form from './RequestForm';
 import './Pages.css';
-import { useAuth } from './auth';
 import { useNavigate } from 'react-router-dom';
 import { Header } from './common/header/Header';
 import CookieManager from './CookieManager';
 export function PostLogin() {
   const [files, setFiles] = useState([]);
-  const auth = useAuth();
   const navigate = useNavigate();
   const handleLogout = () => {
-    auth.logout();
+    CookieManager.eraseCookie('email');
+    CookieManager.eraseCookie('token');
     navigate('/');
   };
   useEffect(() => {
@@ -22,21 +21,20 @@ export function PostLogin() {
   }, []);
 
   async function fetchAll() {
-    let email = CookieManager.getCookie("email");
-    let token = CookieManager.getCookie("token");
+    let email = CookieManager.getCookie('email');
+    let token = CookieManager.getCookie('token');
 
     try {
       const response = await axios.get('http://localhost:5050/files', {
         params: { email: email, token: token }
       });
       return response.data;
-
     } catch (error) {
       if (error.response.status == 401) {
         // Unauthorized, redirect to login page
         navigate('/login', { replace: 'true' });
       } else {
-        console.log(error.response.data)
+        console.log(error.response.data);
       }
       return false;
     }
@@ -60,9 +58,9 @@ export function PostLogin() {
     <div>
       <div>
         <Header />
-        <h1 className="heading">Welcome {auth.user}!</h1>
+        <h1 className="heading">Welcome {CookieManager.getCookie('email')}!</h1>
       </div>
-      <FilesTable files={files} admin={false}/>
+      <FilesTable files={files} admin={false} />
       <Form handleSubmit={updateList} />
       <button onClick={handleLogout}>Logout</button>
     </div>

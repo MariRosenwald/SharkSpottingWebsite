@@ -20,7 +20,7 @@ export function MembersPage() {
       <div className="row">
         <div className="membercolumn">
           <div className="membercard">
-            <img src={FK} alt="Franz" width="100" />
+            <img className="imgs" src={FK} alt="Franz" width="100" />
             <div className="container">
               <h2>Franz J. Kurfess</h2>
               <p className="title">Professor Lead</p>
@@ -54,7 +54,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={NW} alt="Nick" width="100" />
+            <img className="imgs" src={NW} alt="Nick" width="100" />
             <div className="container">
               <h2>Nicholas Wachter</h2>
               <p className="title">Student Research Assistant</p>
@@ -77,7 +77,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={SB} alt="Shaina" width="100" />
+            <img className="imgs" src={SB} alt="Shaina" width="100" />
             <div className="container">
               <h2>Shaina Bagri</h2>
               <p className="title">Student Research Assistant</p>
@@ -104,7 +104,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={RI} alt="Rachel" width="100" />
+            <img className="imgs" src={RI} alt="Rachel" width="100" />
             <div className="container">
               <h2>Rachel Izenson</h2>
               <p className="title">Student Research Assistant</p>
@@ -124,7 +124,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={SS} alt="Sam" width="100" />
+            <img className="imgs" src={SS} alt="Sam" width="100" />
             <div className="container">
               <h2>Samuel Sehnert</h2>
               <p className="title">Student Research Assistant</p>
@@ -146,7 +146,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={JR} alt="Jake" width="100" />
+            <img className="imgs" src={JR} alt="Jake" width="100" />
             <div className="container">
               <h2>Jake Roth</h2>
               <p className="title">Student Research Assistant</p>
@@ -163,7 +163,7 @@ export function MembersPage() {
 
         <div className="membercolumn">
           <div className="membercard">
-            <img src={SM} alt="Sierra" width="100" />
+            <img className="imgs" src={SM} alt="Sierra" width="100" />
             <div className="container">
               <h2>Sierra Martin</h2>
               <p className="title">Student Research Assistant</p>

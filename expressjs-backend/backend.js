@@ -35,33 +35,54 @@ app.get('/user', async (req, res) => {
   const email = req.query.email;
   const token = req.query.token;
 
-  if (!await checkToken(email, token, true)) {
+  if (!(await checkToken(email, token, true))) {
     // 401 unauthorized
     res.status(401).end();
   } else {
-
     try {
       let users = await userServices.getUsers();
-      res.status(200).send(users).end()
-    }
-    catch {
+      res.status(200).send(users).end();
+    } catch {
       res.status(404).send('Could not connect').end();
     }
   }
 });
 
+app.get('/admincheck', async (req, res) => {
+  // Required query parameters
+  const email = req.query.email;
+
+  // Check required query parameters
+  if (email === undefined) {
+    res.status(203).send('null').end();
+  } else if ((await userServices.getUser(email)) === undefined) {
+    //send admin status
+    res.status(500).send('No user found').end();
+  } else {
+    try {
+      //send admin status
+      if (await userServices.isAdmin(email)) {
+        res.status(200).send('true');
+      } else {
+        res.status(201).send('false');
+      }
+    } catch {
+      res.status(404).send(`No user '${email}' found`).end();
+    }
+  }
+});
 app.post('/user', async (req, res) => {
   const newUserEmail = req.body.email;
   const email = req.query.email;
   const token = req.query.token;
-  
-  if (!await checkToken(email, token, true)) {
+
+  if (!(await checkToken(email, token, true))) {
     // 401 unauthorized
     res.status(401).end();
   } else {
-    console.log(newUserEmail)
-    if (newUserEmail === undefined || newUserEmail === "") {
-      res.status(500).send("No email specified").end();
+    console.log(newUserEmail);
+    if (newUserEmail === undefined || newUserEmail === '') {
+      res.status(500).send('No email specified').end();
     } else {
       const newUser = {
         email: newUserEmail,
@@ -74,17 +95,16 @@ app.post('/user', async (req, res) => {
       } else {
         res.status(500).send(`Could not create user '${newUserEmail}'`).end();
       }
-      
     }
   }
-})
+});
 
 app.delete('/user', async (req, res) => {
   const emailToRemove = req.body.emailToRemove;
   const email = req.body.email;
   const token = req.body.token;
 
-  if (!await checkToken(email, token, true)) {
+  if (!(await checkToken(email, token, true))) {
     // 401 unauthorized
     res.status(401).end();
   } else {
@@ -100,20 +120,17 @@ app.get('/requests', (req, res) => {
 // Files
 
 app.get('/files', async (req, res) => {
-
   const email = req.query.email;
   const token = req.query.token;
 
-  if (!await checkToken(email, token)) {
+  if (!(await checkToken(email, token))) {
     // 401 unauthorized
     res.status(401).end();
   } else {
-
     try {
       let files = await fileServices.getAllFiles();
-      res.status(200).send(files).end()
-    }
-    catch {
+      res.status(200).send(files).end();
+    } catch {
       res.status(404).send('Could not connect').end();
     }
   }
@@ -131,7 +148,7 @@ app.delete('/files', async (req, res) => {
   const email = req.body.email;
   const token = req.body.token;
 
-  if (!await checkToken(email, token, true)) {
+  if (!(await checkToken(email, token, true))) {
     // 401 unauthorized
     res.status(401).end();
   } else {
@@ -143,7 +160,6 @@ app.delete('/files', async (req, res) => {
 // Authorization
 
 app.get('/auth', async (req, res) => {
-
   // Required query parameters
   const email = req.query.email;
   const pwd = req.query.pwd;
@@ -159,7 +175,6 @@ app.get('/auth', async (req, res) => {
     try {
       auth = await checkPassword(email, pwd);
       if (auth) {
-
         // Generate and send back an access token to be stored as a cookie
         let token = generateToken();
         await userServices.updateUserToken(email, token);
@@ -171,9 +186,7 @@ app.get('/auth', async (req, res) => {
           // User is not an admin
           res.status(200).send(token).end();
         }
-
       } else {
-
         // Unauthorized (401)
         res.status(401).send('Incorrect password').end();
       }
@@ -207,7 +220,6 @@ function addRequest(request) {
 }
 
 async function checkPassword(email, pwd) {
-
   let user = await userServices.getUser(email);
 
   if (user === undefined) {
@@ -228,16 +240,16 @@ async function checkToken(email, token, admin = false) {
     return false;
   }
   if (admin) {
-    console.log(user.admin)
-    console.log(user.token)
-    console.log(token)
+    console.log(user.admin);
+    console.log(user.token);
+    console.log(token);
     return user.token === token && user.admin;
   }
   return user.token === token;
 }
 
 function generateToken() {
-    return randomString(30);
+  return randomString(30);
 }
 
 function generatePassword() {
@@ -245,25 +257,24 @@ function generatePassword() {
 }
 
 function randomString(length) {
-  const  allowedCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-  let randomString = "";
+  const allowedCharacters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let randomString = '';
   for (let i = 0; i < length; i++) {
-      let index = Math.floor(Math.random()*allowedCharacters.length);
-      randomString += allowedCharacters[index];
+    let index = Math.floor(Math.random() * allowedCharacters.length);
+    randomString += allowedCharacters[index];
   }
   return randomString;
 }
 
 // function randompass(){
-//   characters = "zxcvbnm,./asdfghjkl;'qwertyuiop[]`1234567890-=ZXCVBNM<>?ASDFGHJKL:QWERTYUIOP{}|!@#$%^&*()_+"; 
-//   pass = ""; 
-//   pass_len = 6; 
-  
+//   characters = "zxcvbnm,./asdfghjkl;'qwertyuiop[]`1234567890-=ZXCVBNM<>?ASDFGHJKL:QWERTYUIOP{}|!@#$%^&*()_+";
+//   pass = "";
+//   pass_len = 6;
+
 //   for(i = 0; i < pass_len; i++){
-//     ix = Math.floor(Math.random()*characters.length); 
-//     pass+=characters[ix]; 
+//     ix = Math.floor(Math.random()*characters.length);
+//     pass+=characters[ix];
 //   }
 
 //   return pass
 // }
-

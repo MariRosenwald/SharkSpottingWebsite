@@ -62,7 +62,11 @@ export function PostLogin() {
       </div>
       <FilesTable files={files} admin={false} />
       <Form handleSubmit={updateList} />
-      <button onClick={handleLogout}>Logout</button>
+      <button
+        style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', marginTop: 11 + 'rem' }}
+        onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 }

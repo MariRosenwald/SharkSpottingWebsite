@@ -168,6 +168,11 @@ export function AdminPage() {
       <div style={{ marginTop: 5 + 'em' }}>
         <FilesTable files={files} admin={true} removeFile={removeFile} />
       </div>
+      <button
+        style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', marginTop: 4 + 'rem' }}
+        onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 }

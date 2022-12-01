@@ -1,7 +1,64 @@
-import React from 'react';
+import React, { useState } from 'react';
+//import { useNavigate } from 'react-router-dom';
+import CookieManager from './CookieManager';
+import axios from 'axios';
 import './Pages.css';
 
+
+
+
 function AddFileRow(props) {
+
+  const [file, setFile] = useState({
+    title: '',
+    location: '',
+    description: ''
+  });
+  //const navigate = useNavigate();
+  
+  function handleInputChange(event) {
+    event.preventDefault();
+    const { name, value } = event.target;
+    if (name == "title") {
+      setFile({title: value, location: file.location, description: file.description});
+    }
+    else if (name == "location") {
+      setFile({title: file.title, location: value, description: file.description})
+    }
+    else if (name == "description") {
+      setFile({title: file.title, location: file.location, description: value})
+    }
+  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    
+    alert(`file: ${file.title}, location: ${file.location}, description: ${file.description}`)
+  
+    let email = CookieManager.getCookie("email");
+    let token = CookieManager.getCookie("token");
+  
+    try {
+      await axios.post('http://localhost:5050/files', 
+      {
+        title: file.title,
+        location: file.location,
+        description: file.description
+      }, {
+        params: { email: email, token: token}
+      });
+      location.reload();
+    } catch(error) {
+      if (error.response.data) {
+        alert(error.response.data);
+      }
+    }
+    setFile({
+      title: '',
+      location: '',
+      description: ''
+    });
+  }
+
   if (props.admin) {
     return (
       <tr>
@@ -9,25 +66,28 @@ function AddFileRow(props) {
             <input 
               name="title"
               placeholder="Title"
+              onChange={handleInputChange}
             />
           </td>
           <td>
           <input 
               name="location"
               placeholder="Location"
+              onChange={handleInputChange}
             />
           </td>
           <td>
           <input 
-              name="location"
+              name="description"
               placeholder="Description"
+              onChange={handleInputChange}
             />
           </td>
           <td>
-            <button>Add</button>
+            <button onClick={handleSubmit}>Add</button>
           </td>
         </tr>
-    );
+    ); 
   }
 }
 

@@ -3,9 +3,9 @@ import { Header } from './common/header/Header';
 import FilesTable from './FilesTable';
 import UsersTable from './AdminTable';
 import axios from 'axios';
-import RequestTable from './RequestTable';
 import CookieManager from './CookieManager';
 import { useNavigate } from 'react-router-dom';
+
 
 export function AdminPage() {
   const navigate = useNavigate();
@@ -23,31 +23,6 @@ export function AdminPage() {
       if (result) setFiles(result);
     });
   }, []);
-
-  const [request, setRequest] = useState([]);
-  useEffect(() => {
-    fetchRequests().then((result) => {
-      if (result) setRequest(result);
-    });
-  }, []);
-
-  async function fetchRequests() {
-    let email = CookieManager.getCookie("email");
-    let token = CookieManager.getCookie("token");
-
-    try {
-      const response = await axios.get('http://localhost:5050/requests', {
-        params: { email: email, token: token }
-      });
-      return response.data.request_list;
-    } catch (error) {
-      if (error.response.status == 401) {
-        // Unauthorized, redirect to login screen
-        navigate('/login', { replace: 'true' });
-      }
-      return false;
-    }
-  }
 
   async function fetchUsers() {
     let email = CookieManager.getCookie("email");
@@ -190,9 +165,6 @@ export function AdminPage() {
       </form>
       <div style={{ marginTop: 5 + 'em' }}>
         <FilesTable files={files} admin={true} removeFile={removeFile}/>
-      </div>
-      <div style={{ marginTop: 5 + 'em' }}>
-        <RequestTable requests={request} />
       </div>
     </div>
   );

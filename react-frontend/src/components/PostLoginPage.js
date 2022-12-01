@@ -60,7 +60,7 @@ export function PostLogin() {
     <div>
       <div>
         <Header />
-        <h1 className="heading">Welcome {auth.user}!</h1>
+        <h1 className="heading">Member Page</h1>
       </div>
       <FilesTable files={files} admin={false}/>
       <Form handleSubmit={updateList} />

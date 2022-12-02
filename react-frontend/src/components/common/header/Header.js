@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Navbar } from '../navbar/Navbar';
 import './Header.css';
 
-
 const topHeader = {
   backgroundColor: '#005D71',
   color: 'white',
@@ -33,11 +32,17 @@ export function Header() {
             SharkSpotting
           </a>
         </section>
-        <section style={{width:'68%', textAlign:'center', paddingTop: '0.75rem'}} className="topHeaderNavbar">
+        <section
+          style={{
+            width: '90%',
+            textAlign: 'center',
+            paddingTop: '0.75rem',
+            position: 'absolute'
+          }}
+          className="topHeaderNavbar">
           <Navbar />
         </section>
       </section>
-
     </section>
   );
 }

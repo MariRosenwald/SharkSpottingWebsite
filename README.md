@@ -37,7 +37,7 @@ To access our wiki, [click here](https://github.com/MariRosenwald/SharkSpottingW
    MONGO_DB=users
    MONGO_CLUSTER=sharkspotting.ulo0c7e.mongodb.net
    ```
-   This information can be found on the mongoDB website when clicking connect on
+   This information can be found on the mongoDB website when accepting the access invite via email
 
 - Start the frontend
 

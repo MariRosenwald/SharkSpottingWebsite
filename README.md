@@ -29,7 +29,7 @@ To access our wiki, [click here](https://github.com/MariRosenwald/SharkSpottingW
  
  - Database Access
  
-   If running locally, create a .env file in your main project directory and add the following:
+   If running locally, create a .env file in your main expressjs-backend directory and add the following:
  
    ```bash
    MONGO_USER=your_username

@@ -33,7 +33,7 @@ export function Header() {
             SharkSpotting
           </a>
         </section>
-        <section className="topHeaderNavbar">
+        <section style={{width:'68%', textAlign:'center', paddingTop: '0.75rem'}} className="topHeaderNavbar">
           <Navbar />
         </section>
       </section>

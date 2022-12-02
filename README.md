@@ -1,6 +1,9 @@
 ![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/react-frontend.js.yml/badge.svg)
 ![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/expressjs-backend.js.yml/badge.svg)
 
+# **Description**
+To find our original UI prototpe, [click here](https://www.figma.com/file/IAe6rOpFXjs3MEIfuflc56/Shark-Spotting-Website-UI-Prototype).
+
 
 # **How to Run**
 

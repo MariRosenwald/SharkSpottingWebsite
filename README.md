@@ -8,6 +8,8 @@ This website is designed to operate as the central database and reference point 
 
 To find our original UI prototpe, [click here](https://www.figma.com/file/IAe6rOpFXjs3MEIfuflc56/Shark-Spotting-Website-UI-Prototype).
 
+To access our wiki, [click here](https://github.com/MariRosenwald/SharkSpottingWebsite/wiki)
+
 
 # **How to Run**
 
@@ -24,6 +26,18 @@ To find our original UI prototpe, [click here](https://www.figma.com/file/IAe6rO
   cd react-frontend
   npm install
   ```
+ 
+ - Database Access
+ 
+   If running locally, create a .env file in your main project directory and add the following:
+ 
+   ```bash
+   MONGO_USER=your_username
+   MONGO_PWD=your_password
+   MONGO_DB=users
+   MONGO_CLUSTER=sharkspotting.ulo0c7e.mongodb.net
+   ```
+   This information can be found on the mongoDB website when clicking connect on
 
 - Start the frontend
 

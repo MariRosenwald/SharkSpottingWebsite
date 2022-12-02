@@ -84,7 +84,7 @@ function AddFileRow(props) {
             />
           </td>
           <td>
-            <button onClick={handleSubmit}>Add</button>
+            <button className='inputbuttontables' onClick={handleSubmit}>Add</button>
           </td>
         </tr>
     ); 
@@ -114,7 +114,7 @@ function FilesTableBody(props) {
         </td>
         <td>{row.description}</td>
         <td hidden={!props.admin}>
-          <button onClick={() => props.removeFile(index)} hidden={row.admin}>Remove</button>
+          <button className='inputbuttontables' onClick={() => props.removeFile(index)} hidden={row.admin}>Remove</button>
         </td>
       </tr>
     );

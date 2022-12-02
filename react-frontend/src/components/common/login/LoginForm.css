@@ -39,13 +39,13 @@ label {
 
 .inputbutton {
   color: #005d71;
-  border: 1px solid #005d71;
+  border: 1px solid black;
   border-radius: 5px;
 }
 
 .forminput {
   color: #c8a326;
-  border: 1px solid #005d71;
+  border: 1px solid black;
   border-radius: 3px;
 }
 ::placeholder {

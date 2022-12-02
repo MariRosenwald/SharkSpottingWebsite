@@ -37,7 +37,7 @@ function UsersTableBody(props) {
         <td>{showPassword(row.pwd, row.admin)}</td>
         <td>{getAdminStatus(row.admin)}</td>
         <td>
-          <button onClick={() => props.removeUser(index)} hidden={row.admin}>Delete</button>
+          <button className='inputbuttontables' onClick={() => props.removeUser(index)} hidden={row.admin}>Delete</button>
         </td>
       </tr>
     );

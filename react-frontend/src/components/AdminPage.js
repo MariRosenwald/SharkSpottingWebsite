@@ -161,14 +161,15 @@ export function AdminPage() {
       <UsersTable users={users} removeUser={removeUser} />
       <p></p>
       <form style={{ textAlign: 'center' }} className="Auth-form" onSubmit={handleSubmit}>
-        <input name="email" placeholder="Email" value={email} onChange={handleInputChange} />
+        <input className='adminforminput' name="email" placeholder="Email" value={email} onChange={handleInputChange} />
 
-        <input type="submit" value="Add" />
+        <input className='inputbuttontables' type="submit" value="Add" />
       </form>
       <div style={{ marginTop: 5 + 'em' }}>
         <FilesTable files={files} admin={true} removeFile={removeFile} />
       </div>
       <button
+        className='inputbuttontables'
         style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', marginTop: 4 + 'rem' }}
         onClick={handleLogout}>
         Logout

@@ -63,6 +63,7 @@ export function PostLogin() {
       <FilesTable files={files} admin={false} />
       <Form handleSubmit={updateList} />
       <button
+        className='inputbuttontables'
         style={{ marginLeft: 'auto', marginRight: 'auto', display: 'block', marginTop: 11 + 'rem' }}
         onClick={handleLogout}>
         Logout

@@ -32,22 +32,55 @@
 .centered-table {
   margin-left: auto;
   margin-right: auto;
-  border-collapse: collapse;
+  border-collapse: separate;
   width: 75%;
+  border: solid black 1px;
+  border-radius: 10px;
+  border-spacing: 0px;
+  overflow: hidden;
+  
+
 }
 
-th {
+th:not(:last-child) {
   padding-top: 12px;
   padding-bottom: 12px;
   text-align: left;
   background-color: #005d71;
   color: white;
-  border: 1px solid #000;
+  /* border-radius: 10px; */
+  
+  /* border: 1px solid #000; */
+  border-right: 1px solid #000;
   padding: 8px;
 }
 
-td {
-  border: 1px solid #000;
+th:last-child {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #005d71;
+  color: white;
+  /* border-radius: 10px; */
+  
+  /* border: 1px solid #000; */
+  /* border-left: 1px solid #000; */
+  padding: 8px;
+}
+
+td:not(:last-child) {
+  /* border: 1px solid #000; */
+  /* border-left: 1px solid #000;*/
+  border-top: 1px solid black;
+  border-right: 1px solid black;
+  padding: 8px;
+}
+
+td:last-child{
+  /* border: 1px solid #000; */
+  /* border-left: 1px solid #000;*/
+  border-top: 1px solid black;
+  
   padding: 8px;
 }
 
@@ -73,4 +106,16 @@ td {
 
 .newsLink {
   color: #c8a326;
+}
+
+.inputbuttontables {
+  color: #005d71;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.adminforminput {
+  color: #c8a326;
+  border: 1px solid black;
+  border-radius: 3px;
 }

@@ -8,7 +8,7 @@ This website is designed to operate as the central database and reference point 
 
 To find our original UI prototpe, [click here](https://www.figma.com/file/IAe6rOpFXjs3MEIfuflc56/Shark-Spotting-Website-UI-Prototype).
 
-To access our wiki, [click here](https://github.com/MariRosenwald/SharkSpottingWebsite/wiki)
+To access our wiki, [click here](https://github.com/MariRosenwald/SharkSpottingWebsite/wiki).
 
 
 # **How to Run**

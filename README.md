@@ -2,6 +2,10 @@
 ![main](https://github.com/MariRosenwald/SharkSpottingWebsite/actions/workflows/expressjs-backend.js.yml/badge.svg)
 
 # **Description**
+
+This website is designed to operate as the central database and reference point for the Drones for Marine Science and Agriculture research team at Cal Poly. It allows the team to release information about current developments and discoveries by the team for public viewing. It also gives team members an easier way to access files and resources for training models that can be used to detect sharks and cows more accurately. There is already a basic landing page for the team, but this adds greater functionality and will allow the team to have a dynamic resource that can change as needed for future use. 
+
+
 To find our original UI prototpe, [click here](https://www.figma.com/file/IAe6rOpFXjs3MEIfuflc56/Shark-Spotting-Website-UI-Prototype).
 
 

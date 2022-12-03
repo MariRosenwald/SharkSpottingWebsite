@@ -26,6 +26,23 @@ export function TeamsPage() {
             {/* <p><button className="button">Contact</button></p> */}
           </div>
         </div>
+        <div className="card">
+          <div className="container">
+            <h2>Fintastic RetinaNet</h2>
+            <p className="title">Jonathan Serdinsky, Peter Marsh, Rachel Izenson, Tyler Herzog</p>
+            <p className="body">
+              Using the data and information collected by former project members, our goal is to
+              train a model that is best suited for the team objective. We are using RetinaNet, an
+              open source single-stage object detection model built with PyTorch, with the plan of
+              improving on the accuracy of the current model. This current model is being used in
+              other team projects and is implemented using YOLOv5, a different type of detection
+              model. Our main focus is the detection of sharks in their natural habitat, namely
+              those along the California coastline. After this new model is built, we will compare
+              it to the current model to determine if there is improvement in our results.
+            </p>
+            {/* <p><button className="button">Contact</button></p> */}
+          </div>
+        </div>
       </div>
     </div>
   );
